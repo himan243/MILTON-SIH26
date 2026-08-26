@@ -1,4 +1,3 @@
-:::writing{variant="document" id="58321" title="Nostalgic Hub — Antigravity Master Build Prompt"}
 # NOSTALGIC HUB
 ## Hackathon-Ready Full-Stack MVP — Google Antigravity
 
@@ -1754,4 +1753,3 @@ Most importantly:
 The first impression should be:
 
 **"This feels like a place where our forgotten memories are still alive."**
-:::writing:semicolon
