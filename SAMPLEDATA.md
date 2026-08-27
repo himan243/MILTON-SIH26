@@ -30,6 +30,7 @@ The dataset includes 10 traditional games that were once common in everyday chil
 * Pachisi
 * Chaupar
 * Nau Gotiyan
+* Shollo Guti
 
 > These are described as **"Forgotten & Fading Games"**, not extinct games, as some are still played in certain communities.
 
