@@ -13,7 +13,8 @@ import {
   UtensilsCrossed,
   Layers,
   ChevronRight,
-  Shield
+  Shield,
+  Folder
 } from 'lucide-react';
 
 export default function ProfileJourneyPage() {
@@ -29,118 +30,128 @@ export default function ProfileJourneyPage() {
   const progressPercent = Math.min(100, Math.max(0, ((user.xp - currentLevelMinXP) / 300) * 100));
 
   return (
-    <div className="min-h-screen bg-[#fcf9f3] py-12 sm:py-16">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="lg:pl-[354px] min-h-screen bg-[#faf8f5] bg-creased-paper py-10 sm:py-14 px-4 sm:px-6 lg:px-10 transition-all">
+      <div className="max-w-[1240px] mx-auto">
         
-        {/* Profile Identity Card */}
-        <div className="bg-[#1b3022] text-[#fcf9f3] rounded-3xl p-6 sm:p-10 shadow-xl mb-12 relative overflow-hidden">
-          <div className="absolute -right-10 -bottom-10 w-80 h-80 bg-[#c08820]/15 rounded-full blur-3xl pointer-events-none" />
+        {/* Profile Identity Passport Card */}
+        <div className="card-retro bg-[#f4eee3] p-6 sm:p-8 lg:p-10 border-[2.5px] border-[#0c0f14] shadow-retro-xl mb-10 relative">
+          <div className="pushpin-red" />
 
-          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 relative z-10">
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+            
             <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={user.avatarUrl}
                 alt={user.name}
-                className="w-24 h-24 rounded-full border-4 border-[#fbbb51] object-cover shadow-lg"
+                className="w-24 h-24 rounded-2xl border-2 border-black object-cover shadow-retro-sm"
               />
               <div className="space-y-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#fbbb51] flex items-center justify-center sm:justify-start gap-1.5">
-                  <Shield className="w-3.5 h-3.5" /> Role: {user.role.toUpperCase()}
-                </span>
-                <h1 className="font-display text-3xl font-bold text-[#fcf9f3]">
+                <div className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-[#fef08a] border border-black rounded-md font-display text-xs uppercase shadow-retro-sm text-[#0c0f14]">
+                  <Shield className="w-3 h-3 text-[#ef4444]" /> ROLE: {user.role.toUpperCase()}
+                </div>
+                <h1 className="font-display text-3xl sm:text-4xl font-bold text-[#0c0f14] leading-tight">
                   {user.name}
                 </h1>
-                <p className="text-xs text-[#b4cdb8]">📍 {user.region} • {user.email}</p>
+                <p className="font-hand text-sm font-bold text-zinc-600">📍 {user.region} • {user.email}</p>
                 <div className="pt-2 flex flex-wrap gap-2 justify-center sm:justify-start">
-                  <span className="px-3 py-1 bg-[#061b0e] text-[#fbbb51] rounded-full text-xs font-bold">
-                    Level {user.level} Cultural Archivist
+                  <span className="px-3 py-1 bg-[#0c0f14] text-[#fef08a] rounded-lg text-xs font-display uppercase border border-black shadow-retro-sm">
+                    LEVEL {user.level} CULTURAL ARCHIVIST
                   </span>
-                  <span className="px-3 py-1 bg-[#061b0e] text-[#fe997c] rounded-full text-xs font-bold flex items-center gap-1">
-                    <Flame className="w-3.5 h-3.5 fill-current" /> {user.streakDays} Day Streak
+                  <span className="px-3 py-1 bg-[#ef4444] text-white rounded-lg text-xs font-display uppercase border border-black shadow-retro-sm flex items-center gap-1">
+                    <Flame className="w-3.5 h-3.5 fill-current" /> {user.streakDays} DAY STREAK
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Quick XP Bar */}
-            <div className="w-full md:w-72 bg-[#061b0e]/70 p-5 rounded-2xl border border-[#364c3c] space-y-2 text-left">
-              <div className="flex justify-between text-xs font-bold text-[#fcf9f3]">
-                <span>Level {user.level}</span>
-                <span className="text-[#fbbb51]">{user.xp} / {nextLevelXP} XP</span>
+            {/* Quick XP Ledger Box */}
+            <div className="w-full md:w-72 bg-white p-5 rounded-2xl border-2 border-black shadow-retro-sm space-y-2 text-left">
+              <div className="flex justify-between font-display text-xs font-bold text-[#0c0f14]">
+                <span>LEVEL {user.level}</span>
+                <span className="text-[#ef4444]">{user.xp} / {nextLevelXP} XP</span>
               </div>
-              <div className="w-full h-2.5 bg-[#364c3c] rounded-full overflow-hidden">
+              <div className="w-full h-3 bg-zinc-200 border border-black rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#c08820] to-[#fbbb51] rounded-full transition-all duration-500"
+                  className="h-full bg-[#ef4444] rounded-full transition-all duration-500"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
-              <div className="text-[10px] text-[#819986] text-right">
-                {nextLevelXP - user.xp} XP to Level {user.level + 1}
+              <div className="font-hand text-xs font-bold text-zinc-600 text-right">
+                {nextLevelXP - user.xp} XP until Level {user.level + 1}
               </div>
             </div>
+
           </div>
         </div>
 
         {/* Collections Tabs Navigation */}
-        <div className="flex gap-2 p-1.5 bg-[#f0eee8] rounded-full border border-[#c3c8c1] mb-8 overflow-x-auto">
+        <div className="flex flex-wrap gap-2 p-1.5 bg-[#f4eee3] rounded-2xl border-2 border-black mb-8 shadow-retro-sm">
           <button
             onClick={() => setActiveTab('games')}
-            className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap transition-colors ${
-              activeTab === 'games' ? 'bg-[#1b3022] text-[#fcf9f3]' : 'text-[#434843] hover:text-[#061b0e]'
+            className={`px-4 py-2 rounded-xl font-display text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+              activeTab === 'games'
+                ? 'bg-[#0c0f14] text-[#fef08a] border border-black shadow-retro-sm'
+                : 'text-zinc-700 hover:bg-zinc-200'
             }`}
           >
-            <Gamepad2 className="w-4 h-4" /> Saved Games ({savedGamesList.length})
+            <Gamepad2 className="w-4 h-4" /> SAVED GAMES ({savedGamesList.length})
           </button>
           <button
             onClick={() => setActiveTab('crafts')}
-            className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap transition-colors ${
-              activeTab === 'crafts' ? 'bg-[#1b3022] text-[#fcf9f3]' : 'text-[#434843] hover:text-[#061b0e]'
+            className={`px-4 py-2 rounded-xl font-display text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+              activeTab === 'crafts'
+                ? 'bg-[#0c0f14] text-[#fef08a] border border-black shadow-retro-sm'
+                : 'text-zinc-700 hover:bg-zinc-200'
             }`}
           >
-            <Hammer className="w-4 h-4" /> Saved Crafts ({savedCraftsList.length})
+            <Hammer className="w-4 h-4" /> SAVED CRAFTS ({savedCraftsList.length})
           </button>
           <button
             onClick={() => setActiveTab('foods')}
-            className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap transition-colors ${
-              activeTab === 'foods' ? 'bg-[#1b3022] text-[#fcf9f3]' : 'text-[#434843] hover:text-[#061b0e]'
+            className={`px-4 py-2 rounded-xl font-display text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+              activeTab === 'foods'
+                ? 'bg-[#0c0f14] text-[#fef08a] border border-black shadow-retro-sm'
+                : 'text-zinc-700 hover:bg-zinc-200'
             }`}
           >
-            <UtensilsCrossed className="w-4 h-4" /> Food Diary ({savedFoodsList.length})
+            <UtensilsCrossed className="w-4 h-4" /> FOOD DIARY ({savedFoodsList.length})
           </button>
           <button
             onClick={() => setActiveTab('ai')}
-            className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap transition-colors ${
-              activeTab === 'ai' ? 'bg-[#1b3022] text-[#fcf9f3]' : 'text-[#434843] hover:text-[#061b0e]'
+            className={`px-4 py-2 rounded-xl font-display text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+              activeTab === 'ai'
+                ? 'bg-[#0c0f14] text-[#fef08a] border border-black shadow-retro-sm'
+                : 'text-zinc-700 hover:bg-zinc-200'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-[#c08820]" /> AI Builds ({savedProjects.length})
+            <Sparkles className="w-4 h-4 text-[#ef4444]" /> AI BUILDS ({savedProjects.length})
           </button>
         </div>
 
         {/* Tab Content Display */}
-        <div className="space-y-6 mb-16">
+        <div className="space-y-6 mb-14">
           
           {/* Games Tab */}
           {activeTab === 'games' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {savedGamesList.length > 0 ? (
                 savedGamesList.map((g) => (
-                  <div key={g.id} className="p-4 bg-[#ffffff] rounded-3xl border border-[#c3c8c1] shadow-md flex items-center gap-4">
+                  <div key={g.id} className="card-retro bg-white p-4 border-2 border-black shadow-retro-md flex items-center gap-3.5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={g.imageUrl} alt={g.name} className="w-16 h-16 rounded-2xl object-cover shrink-0" />
+                    <img src={g.imageUrl} alt={g.name} className="w-16 h-16 rounded-xl object-cover border border-black shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="text-[10px] uppercase font-bold text-[#974730]">{g.region}</div>
-                      <h4 className="font-display font-bold text-sm text-[#061b0e] truncate">{g.name}</h4>
-                      <Link href={`/games/${g.id}`} className="text-xs font-bold text-[#1b3022] hover:underline flex items-center gap-1 mt-1">
-                        View Game Rules <ChevronRight className="w-3 h-3" />
+                      <div className="font-display text-[10px] uppercase text-[#ef4444]">{g.region}</div>
+                      <h4 className="font-display font-bold text-lg text-[#0c0f14] truncate">{g.name}</h4>
+                      <Link href={`/games/${g.id}`} className="font-display text-xs uppercase text-[#0c0f14] hover:text-[#ef4444] flex items-center gap-1 mt-0.5">
+                        LEARN RULES <ChevronRight className="w-3 h-3" />
                       </Link>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="col-span-3 p-10 bg-[#ffffff] rounded-3xl border border-[#c3c8c1] text-center text-xs text-[#737973]">
-                  No games saved yet. Explore the archive and bookmark your favorite traditional games!
+                <div className="col-span-3 p-10 card-retro bg-white text-center font-hand text-lg text-zinc-600 font-bold">
+                  No games saved in passport yet. Explore the archive and bookmark your favorite folk games!
                 </div>
               )}
             </div>
@@ -151,20 +162,20 @@ export default function ProfileJourneyPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {savedCraftsList.length > 0 ? (
                 savedCraftsList.map((c) => (
-                  <div key={c.id} className="p-4 bg-[#ffffff] rounded-3xl border border-[#c3c8c1] shadow-md flex items-center gap-4">
+                  <div key={c.id} className="card-retro bg-white p-4 border-2 border-black shadow-retro-md flex items-center gap-3.5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={c.imageUrl} alt={c.name} className="w-16 h-16 rounded-2xl object-cover shrink-0" />
+                    <img src={c.imageUrl} alt={c.name} className="w-16 h-16 rounded-xl object-cover border border-black shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="text-[10px] uppercase font-bold text-[#c08820]">{c.category}</div>
-                      <h4 className="font-display font-bold text-sm text-[#061b0e] truncate">{c.name}</h4>
-                      <Link href={`/crafts/${c.id}`} className="text-xs font-bold text-[#1b3022] hover:underline flex items-center gap-1 mt-1">
-                        View Crafting Method <ChevronRight className="w-3 h-3" />
+                      <div className="font-display text-[10px] uppercase text-[#d97706]">{c.category}</div>
+                      <h4 className="font-display font-bold text-lg text-[#0c0f14] truncate">{c.name}</h4>
+                      <Link href={`/crafts/${c.id}`} className="font-display text-xs uppercase text-[#0c0f14] hover:text-[#d97706] flex items-center gap-1 mt-0.5">
+                        VIEW TECHNIQUE <ChevronRight className="w-3 h-3" />
                       </Link>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="col-span-3 p-10 bg-[#ffffff] rounded-3xl border border-[#c3c8c1] text-center text-xs text-[#737973]">
+                <div className="col-span-3 p-10 card-retro bg-white text-center font-hand text-lg text-zinc-600 font-bold">
                   No traditional crafts saved yet. Bookmark bamboo or pottery heritage items!
                 </div>
               )}
@@ -176,21 +187,21 @@ export default function ProfileJourneyPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {savedFoodsList.length > 0 ? (
                 savedFoodsList.map((f) => (
-                  <div key={f.id} className="p-4 bg-[#ffffff] rounded-3xl border border-[#c3c8c1] shadow-md flex items-center gap-4">
+                  <div key={f.id} className="card-retro bg-white p-4 border-2 border-black shadow-retro-md flex items-center gap-3.5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={f.imageUrl} alt={f.name} className="w-16 h-16 rounded-2xl object-cover shrink-0" />
+                    <img src={f.imageUrl} alt={f.name} className="w-16 h-16 rounded-xl object-cover border border-black shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="text-[10px] uppercase font-bold text-[#1b3022]">{f.state}</div>
-                      <h4 className="font-display font-bold text-sm text-[#061b0e] truncate">{f.name}</h4>
-                      <Link href={`/food-stories/${f.id}`} className="text-xs font-bold text-[#1b3022] hover:underline flex items-center gap-1 mt-1">
-                        View Recipe <ChevronRight className="w-3 h-3" />
+                      <div className="font-display text-[10px] uppercase text-[#059669]">{f.state}</div>
+                      <h4 className="font-display font-bold text-lg text-[#0c0f14] truncate">{f.name}</h4>
+                      <Link href={`/food-stories/${f.id}`} className="font-display text-xs uppercase text-[#0c0f14] hover:text-[#059669] flex items-center gap-1 mt-0.5">
+                        VIEW RECIPE <ChevronRight className="w-3 h-3" />
                       </Link>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="col-span-3 p-10 bg-[#ffffff] rounded-3xl border border-[#c3c8c1] text-center text-xs text-[#737973]">
-                  No traditional recipes saved yet.
+                <div className="col-span-3 p-10 card-retro bg-white text-center font-hand text-lg text-zinc-600 font-bold">
+                  No traditional recipes saved yet in your culinary diary.
                 </div>
               )}
             </div>
@@ -201,20 +212,20 @@ export default function ProfileJourneyPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {savedProjects.length > 0 ? (
                 savedProjects.map((p) => (
-                  <div key={p.id} className="p-4 bg-[#ffffff] rounded-3xl border border-[#c3c8c1] shadow-md flex items-center gap-4">
+                  <div key={p.id} className="card-retro bg-white p-4 border-2 border-black shadow-retro-md flex items-center gap-3.5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={p.uploadedImageUrl} alt={p.idea.title} className="w-16 h-16 rounded-2xl object-cover shrink-0" />
+                    <img src={p.uploadedImageUrl} alt={p.idea.title} className="w-16 h-16 rounded-xl object-cover border border-black shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="text-[10px] uppercase font-bold text-[#fbbb51] bg-[#1b3022] px-2 py-0.5 rounded-full inline-block mb-1">
+                      <div className="font-display text-[10px] uppercase text-[#0c0f14] bg-[#fef08a] px-2 py-0.5 rounded border border-black inline-block mb-0.5">
                         +{p.idea.xpReward} XP
                       </div>
-                      <h4 className="font-display font-bold text-sm text-[#061b0e] truncate">{p.idea.title}</h4>
-                      <div className="text-[11px] text-[#737973]">Saved {p.savedAt}</div>
+                      <h4 className="font-display font-bold text-base text-[#0c0f14] truncate">{p.idea.title}</h4>
+                      <div className="font-hand text-xs font-bold text-zinc-600">Saved {p.savedAt}</div>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="col-span-3 p-10 bg-[#ffffff] rounded-3xl border border-[#c3c8c1] text-center text-xs text-[#737973]">
+                <div className="col-span-3 p-10 card-retro bg-white text-center font-hand text-lg text-zinc-600 font-bold">
                   No AI creations generated yet. Visit &quot;Create with AI&quot; and transform household items!
                 </div>
               )}

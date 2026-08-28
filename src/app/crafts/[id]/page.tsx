@@ -4,11 +4,21 @@ import React, { use } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
-import { Hammer, Bookmark, BookmarkCheck, ArrowLeft, ShieldCheck, Package, Layers } from 'lucide-react';
+import {
+  Hammer,
+  Bookmark,
+  BookmarkCheck,
+  ArrowLeft,
+  ShieldCheck,
+  Package,
+  ChevronRight,
+  Sparkles,
+  MapPin
+} from 'lucide-react';
 
 export default function CraftDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
-  const { crafts, products, user, toggleSaveCraft } = useApp();
+  const { crafts, products, user, toggleSaveCraft, triggerConfetti } = useApp();
 
   const craft = crafts.find((c) => c.id === resolvedParams.id);
   if (!craft) return notFound();
@@ -18,88 +28,101 @@ export default function CraftDetailPage({ params }: { params: Promise<{ id: stri
   );
 
   return (
-    <div className="min-h-screen bg-[#fcf9f3] py-10 sm:py-16">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="lg:pl-[354px] min-h-screen bg-[#faf8f5] bg-creased-paper py-10 sm:py-14 px-4 sm:px-6 lg:px-10 transition-all">
+      <div className="max-w-[1240px] mx-auto">
         
         {/* Back Link */}
         <Link
           href="/crafts"
-          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#434843] hover:text-[#061b0e] mb-8 group"
+          className="inline-flex items-center gap-1.5 font-display text-xs uppercase tracking-wider text-zinc-700 hover:text-[#ef4444] mb-6 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span>Back to All Crafts</span>
+          <span>BACK TO TRADITIONAL CRAFTS ARCHIVE</span>
         </Link>
 
-        {/* Hero Card */}
-        <div className="bg-[#f0eee8] rounded-3xl border border-[#c3c8c1] p-6 sm:p-10 shadow-xl mb-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* Hero Scrapbook Card */}
+        <div className="card-retro bg-[#f4eee3] p-6 sm:p-8 lg:p-10 border-[2.5px] border-[#0c0f14] shadow-retro-xl mb-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative">
+          
+          <div className="pushpin-red" />
+
+          {/* Left Details */}
           <div className="lg:col-span-7 space-y-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 bg-[#1b3022] text-[#fcf9f3] text-[11px] font-bold uppercase rounded-full">
+              <span className="px-3 py-0.5 bg-[#0c0f14] text-[#fef08a] font-display text-xs uppercase rounded-lg border border-black shadow-retro-sm">
                 {craft.category}
               </span>
-              <span className="px-3 py-1 bg-[#d0e9d4] text-[#0b2013] text-[11px] font-bold uppercase rounded-full">
-                Status: {craft.preservationStatus}
+              <span className="rubber-stamp rubber-stamp-green text-[10px] py-0.5">
+                STATUS: {craft.preservationStatus}
+              </span>
+              <span className="px-2.5 py-0.5 bg-white border border-black rounded-lg font-hand text-xs font-bold text-zinc-700">
+                {craft.state}
               </span>
             </div>
 
-            <h1 className="font-display text-3xl sm:text-5xl font-bold text-[#061b0e]">
+            <h1 className="font-display text-4xl sm:text-6xl font-bold text-[#0c0f14] leading-[1.05] tracking-tight">
               {craft.name}
             </h1>
 
             {craft.indigenousName && (
-              <p className="text-sm font-semibold text-[#772f1a]">
-                Indigenous nomenclature: {craft.indigenousName}
-              </p>
+              <div className="p-2.5 bg-white rounded-xl border-2 border-black inline-block shadow-retro-sm">
+                <span className="font-display text-xs uppercase text-[#ef4444] mr-1.5 font-bold">INDIGENOUS NAME:</span>
+                <span className="font-hand text-base font-bold text-[#0c0f14]">{craft.indigenousName}</span>
+              </div>
             )}
 
-            <p className="text-sm text-[#434843] leading-relaxed">
+            <p className="font-hand text-lg text-zinc-800 font-bold leading-relaxed">
               {craft.culturalSignificance}
             </p>
 
-            <div className="pt-2 flex items-center gap-3">
+            <div className="pt-2 flex flex-wrap items-center gap-3">
               <button
-                onClick={() => toggleSaveCraft(craft.id)}
-                className="px-6 py-3 bg-[#1b3022] hover:bg-[#061b0e] text-[#fcf9f3] text-xs font-bold uppercase tracking-wider rounded-full shadow-md flex items-center gap-2"
+                onClick={() => { toggleSaveCraft(craft.id); triggerConfetti(); }}
+                className="btn-retro px-5 py-2.5 bg-[#0c0f14] hover:bg-zinc-800 text-[#fef08a] font-display text-xs font-black uppercase tracking-wider rounded-xl shadow-retro flex items-center gap-2"
               >
                 {user.savedCraftIds.includes(craft.id) ? (
                   <>
-                    <BookmarkCheck className="w-4 h-4 text-[#fbbb51] fill-current" /> Saved in Archive
+                    <BookmarkCheck className="w-4 h-4 text-[#ef4444] fill-current" /> SAVED IN ARCHIVE
                   </>
                 ) : (
                   <>
-                    <Bookmark className="w-4 h-4" /> Save Craft to Collection
+                    <Bookmark className="w-4 h-4 text-[#fef08a]" /> SAVE CRAFT TO PASSPORT
                   </>
                 )}
               </button>
             </div>
           </div>
 
-          <div className="lg:col-span-5 aspect-[4/3] rounded-2xl overflow-hidden shadow-lg bg-[#e5e2dc]">
+          {/* Right Image */}
+          <div className="lg:col-span-5 aspect-[4/3] rounded-2xl overflow-hidden border-2 border-black shadow-retro-md bg-zinc-200">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={craft.imageUrl} alt={craft.name} className="w-full h-full object-cover" />
           </div>
         </div>
 
-        {/* Detailed Knowledge Layer */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+        {/* 2-Column Details Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14">
           
+          {/* Left 8 Cols: Traditional Crafting Method & Verified Artisan Listings */}
           <div className="lg:col-span-8 space-y-8">
             
             {/* Traditional Crafting Method */}
-            <div className="bg-[#ffffff] rounded-3xl p-6 sm:p-8 border border-[#c3c8c1] shadow-md space-y-6">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#974730]">
-                <Hammer className="w-4 h-4" /> Archival Method & Technique
+            <div className="card-retro bg-white p-6 sm:p-8 border-[2.5px] border-[#0c0f14] shadow-retro-md space-y-5">
+              <div className="flex items-center gap-2 text-[#d97706] font-display text-sm uppercase tracking-wider font-bold">
+                <Hammer className="w-4 h-4" /> ARCHIVAL TECHNIQUE & CRAFTING RITUAL
               </div>
-              <h2 className="font-display text-2xl font-bold text-[#061b0e]">
-                How {craft.name} is Traditionally Made
+              <h2 className="font-display text-3xl font-bold text-[#0c0f14]">
+                HOW {craft.name.toUpperCase()} IS TRADITIONALLY HANDCRAFTED
               </h2>
-              <div className="space-y-4">
+              <div className="space-y-3.5">
                 {craft.traditionalCraftingMethod.map((step, idx) => (
-                  <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl bg-[#fcf9f3] border border-[#c3c8c1]/40">
-                    <div className="w-6 h-6 rounded-full bg-[#974730] text-[#fcf9f3] text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3.5 p-4 rounded-xl bg-[#faf8f5] border-2 border-black shadow-retro-sm"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-[#d97706] text-white font-display text-sm font-bold flex items-center justify-center shrink-0 border border-black shadow-retro-sm">
                       {idx + 1}
                     </div>
-                    <p className="text-xs sm:text-sm text-[#1c1c18] leading-relaxed">
+                    <p className="text-xs sm:text-sm text-zinc-800 font-medium leading-relaxed mt-0.5">
                       {step}
                     </p>
                   </div>
@@ -107,15 +130,15 @@ export default function CraftDetailPage({ params }: { params: Promise<{ id: stri
               </div>
             </div>
 
-            {/* Verified Artisan Listings (Clear separation between cultural knowledge & marketplace) */}
-            <div className="bg-[#ffffff] rounded-3xl p-6 sm:p-8 border border-[#c3c8c1] shadow-md space-y-6">
-              <div className="flex items-center justify-between pb-3 border-b border-[#f0eee8]">
+            {/* Living Artisan Marketplace Links */}
+            <div className="card-retro bg-white p-6 sm:p-8 border-[2.5px] border-[#0c0f14] shadow-retro-md space-y-5">
+              <div className="flex items-center justify-between pb-3 border-b-2 border-dashed border-black/20">
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#819986] flex items-center gap-1.5">
-                    <ShieldCheck className="w-4 h-4" /> Living Artisan Marketplace
+                  <span className="font-display text-xs uppercase tracking-wider text-[#059669] flex items-center gap-1.5 font-bold">
+                    <ShieldCheck className="w-4 h-4" /> LIVING ARTISAN MARKETPLACE
                   </span>
-                  <h3 className="font-display text-xl font-bold text-[#061b0e] mt-0.5">
-                    Acquire from Verified Northeast Masters
+                  <h3 className="font-display text-2xl font-bold text-[#0c0f14] mt-0.5">
+                    Acquire from Verified Master Guilds
                   </h3>
                 </div>
               </div>
@@ -123,57 +146,60 @@ export default function CraftDetailPage({ params }: { params: Promise<{ id: stri
               {verifiedListings.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {verifiedListings.map((p) => (
-                    <div key={p.id} className="p-4 rounded-2xl bg-[#fcf9f3] border border-[#c3c8c1]/60 flex flex-col justify-between space-y-3">
+                    <div
+                      key={p.id}
+                      className="p-4 rounded-2xl bg-[#f4eee3] border-2 border-black flex flex-col justify-between space-y-3 shadow-retro-sm"
+                    >
                       <div>
-                        <div className="aspect-[16/10] rounded-xl overflow-hidden mb-3 bg-[#e5e2dc]">
+                        <div className="aspect-[16/10] rounded-xl overflow-hidden mb-3 border border-black bg-zinc-200">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={p.imageUrl} alt={p.title} className="w-full h-full object-cover" />
                         </div>
-                        <h4 className="font-display font-bold text-sm text-[#061b0e] line-clamp-2">
+                        <h4 className="font-display text-lg font-bold text-[#0c0f14] line-clamp-1">
                           {p.title}
                         </h4>
-                        <p className="text-[11px] text-[#737973] mt-1">
+                        <p className="font-hand text-xs text-zinc-600 font-bold mt-0.5">
                           By {p.artisanName} ({p.artisanLocation})
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-[#c3c8c1]/40 flex items-center justify-between">
-                        <span className="font-display text-base font-bold text-[#061b0e]">
+                      <div className="pt-2 border-t border-black/20 flex items-center justify-between">
+                        <span className="font-display text-lg font-bold text-[#0c0f14]">
                           ₹{p.priceInr}
                         </span>
                         <Link
                           href={`/marketplace#${p.id}`}
-                          className="px-4 py-1.5 bg-[#974730] text-[#fcf9f3] text-xs font-bold uppercase rounded-full hover:bg-[#772f1a]"
+                          className="btn-retro px-3.5 py-1.5 bg-[#ef4444] text-white font-display text-xs font-black uppercase tracking-wider rounded-lg shadow-retro-sm"
                         >
-                          Inquire Order
+                          INQUIRE ORDER
                         </Link>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="p-6 bg-[#f6f3ed] rounded-2xl text-center text-xs text-[#737973]">
-                  No commercial listings currently approved for this craft. Would you like to connect with guilds in {craft.region}?
+                <div className="p-6 bg-[#f4eee3] rounded-2xl border-2 border-black text-center font-hand text-base text-zinc-700 font-bold shadow-retro-sm">
+                  Direct artisan inquiries open for guilds in {craft.region}. Connect via the Artisan Portal.
                 </div>
               )}
             </div>
 
           </div>
 
-          {/* Right Sidebar: Materials & Region Metadata */}
+          {/* Right 4 Cols: Materials & Regional Provenance */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="bg-[#ffffff] rounded-3xl p-6 border border-[#c3c8c1] shadow-md space-y-4">
-              <h3 className="font-display text-lg font-bold text-[#061b0e] pb-3 border-b border-[#f0eee8]">
-                Material Origins
+            <div className="card-retro bg-white p-6 border-[2.5px] border-[#0c0f14] shadow-retro-md space-y-4">
+              <h3 className="font-display text-xl font-bold text-[#0c0f14] pb-2 border-b-2 border-dashed border-black/20">
+                PROVENANCE & MATERIALS
               </h3>
 
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#737973] block mb-1">
+                <span className="font-display text-xs uppercase tracking-wider text-zinc-500 block mb-1.5">
                   Raw Indigenous Materials:
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {craft.materialsUsed.map((mat, i) => (
-                    <span key={i} className="px-2.5 py-1 bg-[#f0eee8] text-[#061b0e] text-xs font-medium rounded-full">
+                    <span key={i} className="px-2.5 py-1 bg-[#f4eee3] text-[#0c0f14] text-xs font-bold rounded-lg border border-black shadow-retro-sm">
                       {mat}
                     </span>
                   ))}
@@ -181,17 +207,17 @@ export default function CraftDetailPage({ params }: { params: Promise<{ id: stri
               </div>
 
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#737973] block mb-1">
+                <span className="font-display text-xs uppercase tracking-wider text-zinc-500 block mb-0.5">
                   Primary Cultural Hub:
                 </span>
-                <p className="text-xs text-[#061b0e] font-semibold">{craft.region}, {craft.state}</p>
+                <p className="font-display text-sm font-bold text-[#0c0f14]">{craft.region}, {craft.state}</p>
               </div>
 
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#737973] block mb-1">
-                  Active Craftsmen in Hub:
+                <span className="font-display text-xs uppercase tracking-wider text-zinc-500 block mb-0.5">
+                  Active Craftsmen in Guild:
                 </span>
-                <p className="text-xs text-[#1b3022] font-semibold">~{craft.artisanCountInRegion} Master Artisans</p>
+                <p className="font-display text-sm font-bold text-[#059669]">~{craft.artisanCountInRegion} Master Artisans</p>
               </div>
             </div>
           </div>
@@ -202,3 +228,4 @@ export default function CraftDetailPage({ params }: { params: Promise<{ id: stri
     </div>
   );
 }
+

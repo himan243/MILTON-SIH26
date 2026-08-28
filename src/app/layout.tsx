@@ -28,7 +28,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@500;600;700&display=swap"
           rel="stylesheet"
         />
         <link
@@ -36,11 +36,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#fcf9f3] text-[#1c1c18] font-sans antialiased min-h-screen flex flex-col selection:bg-[#fe997c]/30 selection:text-[#772f1a]">
+      <body className="bg-[#faf8f5] text-[#0c0f14] font-sans antialiased min-h-screen flex flex-col selection:bg-[#fef08a] selection:text-[#0c0f14]">
         <AppProvider>
           <NoiseOverlay />
           <Navbar />
-          <main className="flex-1 pt-[68px]">
+          <main className="flex-1 pt-[72px]">
             {children}
           </main>
           <Footer />

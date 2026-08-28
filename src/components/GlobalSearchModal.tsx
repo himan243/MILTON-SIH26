@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
-import { Search, X, Gamepad2, Hammer, UtensilsCrossed, Package, Sparkles } from 'lucide-react';
+import { Search, X, Gamepad2, Hammer, UtensilsCrossed, Package, Sparkles, Wand2 } from 'lucide-react';
 import type { TraditionalGame, TraditionalCraft, FoodStory, ArtisanProduct, NostalgicBuild } from '@/types';
 
 interface SearchResults {
@@ -57,43 +57,51 @@ export const GlobalSearchModal: React.FC = () => {
   if (!isSearchOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-[#061b0e]/70 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-3xl bg-[#fcf9f3] rounded-3xl border border-[#c3c8c1] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col max-h-[80vh]">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-20 px-4 bg-black/65 backdrop-blur-xs animate-in fade-in duration-150">
+      <div className="w-full max-w-3xl card-retro bg-[#faf8f5] border-[2.5px] border-[#0c0f14] shadow-retro-xl overflow-hidden animate-in zoom-in-95 duration-150 flex flex-col max-h-[85vh] relative">
         
+        {/* Washi Tape at Top */}
+        <div className="washi-tape" />
+
         {/* Search Header */}
-        <div className="p-4 sm:p-6 border-b border-[#c3c8c1]/60 flex items-center gap-3 bg-[#ffffff]">
-          <Search className="w-5 h-5 text-[#974730]" />
+        <div className="p-4 sm:p-5 border-b-2 border-[#0c0f14] flex items-center gap-3 bg-[#f4eee3]">
+          <div className="w-9 h-9 rounded-xl border-2 border-black bg-[#fef08a] flex items-center justify-center shadow-retro-sm">
+            <Search className="w-4 h-4 text-[#0c0f14]" />
+          </div>
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search forgotten games, bamboo crafts, food stories, artisans..."
-            className="flex-1 bg-transparent text-base sm:text-lg font-medium text-[#061b0e] placeholder-[#737973] outline-none"
+            placeholder="Search folk games, bamboo crafts, recipes, memories..."
+            className="flex-1 bg-transparent text-base sm:text-lg font-bold text-[#0c0f14] placeholder-zinc-500 outline-none"
             autoFocus
           />
           {query && (
-            <button onClick={() => setQuery('')} className="p-1 rounded-full text-[#737973] hover:text-[#061b0e]">
+            <button
+              onClick={() => setQuery('')}
+              className="p-1.5 rounded-lg text-zinc-600 hover:text-black hover:bg-black/10 transition-colors"
+            >
               <X className="w-4 h-4" />
             </button>
           )}
           <button
             onClick={() => setIsSearchOpen(false)}
-            className="px-3 py-1.5 bg-[#f0eee8] text-[#061b0e] rounded-full text-xs font-bold uppercase tracking-wider hover:bg-[#e5e2dc]"
+            className="px-3 py-1.5 bg-[#0c0f14] text-white rounded-xl text-xs font-display tracking-wider uppercase shadow-retro-sm hover:bg-zinc-800"
           >
-            Esc
+            ESC
           </button>
         </div>
 
-        {/* Filter Pills */}
-        <div className="px-6 py-3 bg-[#f6f3ed] border-b border-[#c3c8c1]/40 flex items-center gap-2 overflow-x-auto">
+        {/* Category Filter Badges */}
+        <div className="px-5 py-3 bg-[#e4e8ee] border-b-2 border-[#0c0f14] flex items-center gap-2 overflow-x-auto">
           {(['all', 'games', 'crafts', 'food', 'products', 'builds'] as const).map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider transition-colors ${
+              className={`px-3 py-1 rounded-xl text-xs font-display uppercase tracking-wider border-2 transition-all ${
                 activeFilter === filter
-                  ? 'bg-[#1b3022] text-[#fcf9f3]'
-                  : 'bg-[#ffffff] text-[#434843] hover:bg-[#ebe8e2]'
+                  ? 'bg-[#0c0f14] text-[#fef08a] border-black shadow-retro-sm'
+                  : 'bg-white text-[#0c0f14] border-black hover:bg-[#fed7aa]'
               }`}
             >
               {filter}
@@ -101,21 +109,25 @@ export const GlobalSearchModal: React.FC = () => {
           ))}
         </div>
 
-        {/* Search Content */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
+        {/* Search Results Area */}
+        <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 bg-creased-paper">
           {!query.trim() ? (
-            <div className="text-center py-12">
-              <Sparkles className="w-8 h-8 text-[#c08820] mx-auto mb-3 opacity-60" />
-              <p className="font-display text-lg font-bold text-[#061b0e]">Explore the Living Museum</p>
-              <p className="text-xs text-[#737973] mt-1 max-w-sm mx-auto">
-                Type keywords like &quot;Pittu&quot;, &quot;Japi&quot;, &quot;Khar&quot;, &quot;Bamboo&quot;, or &quot;Gilli Danda&quot; to search the Northeast cultural archive.
+            <div className="text-center py-12 space-y-3">
+              <div className="w-12 h-12 rounded-2xl border-2 border-black bg-[#fef08a] flex items-center justify-center mx-auto shadow-retro">
+                <Sparkles className="w-6 h-6 text-[#d97706]" />
+              </div>
+              <p className="font-display text-2xl font-bold text-[#0c0f14] tracking-wide">
+                SEARCH THE LIVING MUSEUM
+              </p>
+              <p className="font-hand text-base sm:text-lg text-zinc-700 font-bold max-w-sm mx-auto leading-tight">
+                Try searching &quot;Pittu&quot;, &quot;Japi&quot;, &quot;Khar&quot;, &quot;Bamboo&quot;, &quot;Longpi&quot; or &quot;Gilli Danda&quot;!
               </p>
             </div>
           ) : !filteredResults || filteredResults.total === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-sm font-medium text-[#737973]">No archival records matched &quot;{query}&quot;</p>
-              <p className="text-xs text-[#974730] mt-2 cursor-pointer hover:underline">
-                Know about this? Submit it to our museum archive!
+            <div className="text-center py-12 space-y-2">
+              <p className="font-display text-xl font-bold text-[#0c0f14]">No archival records found for &quot;{query}&quot;</p>
+              <p className="font-hand text-base text-[#ef4444] font-bold">
+                Know something about this? Use the &quot;PRESERVE&quot; button to submit it!
               </p>
             </div>
           ) : (
@@ -123,25 +135,25 @@ export const GlobalSearchModal: React.FC = () => {
               
               {/* Games Matches */}
               {filteredResults.games.length > 0 && (
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#974730] flex items-center gap-2 mb-2">
-                    <Gamepad2 className="w-4 h-4" /> Forgotten Games ({filteredResults.games.length})
+                <div className="space-y-2">
+                  <div className="font-display text-sm font-bold uppercase tracking-wider text-[#ef4444] flex items-center gap-1.5">
+                    <Gamepad2 className="w-4 h-4" /> FORGOTTEN GAMES ({filteredResults.games.length})
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {filteredResults.games.map((g) => (
                       <Link
                         key={g.id}
                         href={`/games/${g.id}`}
                         onClick={() => setIsSearchOpen(false)}
-                        className="p-3 bg-[#ffffff] rounded-2xl border border-[#c3c8c1]/50 hover:border-[#974730] transition-colors flex items-center gap-3"
+                        className="p-3 bg-white rounded-2xl border-2 border-black hover:bg-[#fef08a] transition-all shadow-retro-sm flex items-center gap-3 group"
                       >
-                        <div className="w-10 h-10 rounded-xl bg-[#f0eee8] overflow-hidden shrink-0">
+                        <div className="w-12 h-12 rounded-xl border border-black overflow-hidden shrink-0 bg-zinc-200">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={g.imageUrl} alt={g.name} className="w-full h-full object-cover" />
+                          <img src={g.imageUrl} alt={g.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                         </div>
-                        <div>
-                          <div className="text-xs font-bold text-[#061b0e]">{g.name}</div>
-                          <div className="text-[11px] text-[#737973] truncate">{g.region}</div>
+                        <div className="min-w-0">
+                          <div className="font-display text-base font-bold text-[#0c0f14] truncate">{g.name}</div>
+                          <div className="text-[11px] font-hand font-bold text-zinc-600 truncate">{g.region} • Level {g.difficultyLevel}</div>
                         </div>
                       </Link>
                     ))}
@@ -151,25 +163,25 @@ export const GlobalSearchModal: React.FC = () => {
 
               {/* Crafts Matches */}
               {filteredResults.crafts.length > 0 && (
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#c08820] flex items-center gap-2 mb-2">
-                    <Hammer className="w-4 h-4" /> Traditional Crafts ({filteredResults.crafts.length})
+                <div className="space-y-2">
+                  <div className="font-display text-sm font-bold uppercase tracking-wider text-[#d97706] flex items-center gap-1.5">
+                    <Hammer className="w-4 h-4" /> TRADITIONAL CRAFTS ({filteredResults.crafts.length})
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {filteredResults.crafts.map((c) => (
                       <Link
                         key={c.id}
                         href={`/crafts/${c.id}`}
                         onClick={() => setIsSearchOpen(false)}
-                        className="p-3 bg-[#ffffff] rounded-2xl border border-[#c3c8c1]/50 hover:border-[#c08820] transition-colors flex items-center gap-3"
+                        className="p-3 bg-white rounded-2xl border-2 border-black hover:bg-[#fed7aa] transition-all shadow-retro-sm flex items-center gap-3 group"
                       >
-                        <div className="w-10 h-10 rounded-xl bg-[#f0eee8] overflow-hidden shrink-0">
+                        <div className="w-12 h-12 rounded-xl border border-black overflow-hidden shrink-0 bg-zinc-200">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={c.imageUrl} alt={c.name} className="w-full h-full object-cover" />
+                          <img src={c.imageUrl} alt={c.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                         </div>
-                        <div>
-                          <div className="text-xs font-bold text-[#061b0e]">{c.name}</div>
-                          <div className="text-[11px] text-[#737973] truncate">{c.category} • {c.state}</div>
+                        <div className="min-w-0">
+                          <div className="font-display text-base font-bold text-[#0c0f14] truncate">{c.name}</div>
+                          <div className="text-[11px] font-hand font-bold text-zinc-600 truncate">{c.category} • {c.state}</div>
                         </div>
                       </Link>
                     ))}
@@ -179,25 +191,25 @@ export const GlobalSearchModal: React.FC = () => {
 
               {/* Food Stories Matches */}
               {filteredResults.foods.length > 0 && (
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#1b3022] flex items-center gap-2 mb-2">
-                    <UtensilsCrossed className="w-4 h-4" /> Food Stories ({filteredResults.foods.length})
+                <div className="space-y-2">
+                  <div className="font-display text-sm font-bold uppercase tracking-wider text-[#059669] flex items-center gap-1.5">
+                    <UtensilsCrossed className="w-4 h-4" /> FOOD STORIES ({filteredResults.foods.length})
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {filteredResults.foods.map((f) => (
                       <Link
                         key={f.id}
                         href={`/food-stories/${f.id}`}
                         onClick={() => setIsSearchOpen(false)}
-                        className="p-3 bg-[#ffffff] rounded-2xl border border-[#c3c8c1]/50 hover:border-[#1b3022] transition-colors flex items-center gap-3"
+                        className="p-3 bg-white rounded-2xl border-2 border-black hover:bg-[#bbf7d0] transition-all shadow-retro-sm flex items-center gap-3 group"
                       >
-                        <div className="w-10 h-10 rounded-xl bg-[#f0eee8] overflow-hidden shrink-0">
+                        <div className="w-12 h-12 rounded-xl border border-black overflow-hidden shrink-0 bg-zinc-200">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={f.imageUrl} alt={f.name} className="w-full h-full object-cover" />
+                          <img src={f.imageUrl} alt={f.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                         </div>
-                        <div>
-                          <div className="text-xs font-bold text-[#061b0e]">{f.name}</div>
-                          <div className="text-[11px] text-[#737973] truncate">{f.region}</div>
+                        <div className="min-w-0">
+                          <div className="font-display text-base font-bold text-[#0c0f14] truncate">{f.name}</div>
+                          <div className="text-[11px] font-hand font-bold text-zinc-600 truncate">{f.region}</div>
                         </div>
                       </Link>
                     ))}
@@ -207,25 +219,25 @@ export const GlobalSearchModal: React.FC = () => {
 
               {/* Marketplace Products Matches */}
               {filteredResults.products.length > 0 && (
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#772f1a] flex items-center gap-2 mb-2">
-                    <Package className="w-4 h-4" /> Verified Marketplace Items ({filteredResults.products.length})
+                <div className="space-y-2">
+                  <div className="font-display text-sm font-bold uppercase tracking-wider text-[#9333ea] flex items-center gap-1.5">
+                    <Package className="w-4 h-4" /> VERIFIED MARKETPLACE ({filteredResults.products.length})
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {filteredResults.products.map((p) => (
                       <Link
                         key={p.id}
                         href={`/marketplace#${p.id}`}
                         onClick={() => setIsSearchOpen(false)}
-                        className="p-3 bg-[#ffffff] rounded-2xl border border-[#c3c8c1]/50 hover:border-[#772f1a] transition-colors flex items-center gap-3"
+                        className="p-3 bg-white rounded-2xl border-2 border-black hover:bg-[#e9d5ff] transition-all shadow-retro-sm flex items-center gap-3 group"
                       >
-                        <div className="w-10 h-10 rounded-xl bg-[#f0eee8] overflow-hidden shrink-0">
+                        <div className="w-12 h-12 rounded-xl border border-black overflow-hidden shrink-0 bg-zinc-200">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={p.imageUrl} alt={p.title} className="w-full h-full object-cover" />
+                          <img src={p.imageUrl} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                         </div>
-                        <div>
-                          <div className="text-xs font-bold text-[#061b0e]">{p.title}</div>
-                          <div className="text-[11px] text-[#737973]">₹{p.priceInr} • By {p.artisanName}</div>
+                        <div className="min-w-0">
+                          <div className="font-display text-base font-bold text-[#0c0f14] truncate">{p.title}</div>
+                          <div className="text-[11px] font-hand font-bold text-zinc-700 truncate">₹{p.priceInr} • By {p.artisanName}</div>
                         </div>
                       </Link>
                     ))}

@@ -1,158 +1,356 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 @import "tailwindcss";
 
 :root {
-  /* Stitch Design System - Heritage Editorial Tokens */
-  --primary: #061b0e;
-  --primary-container: #1b3022;
-  --on-primary: #ffffff;
-  --on-primary-container: #819986;
-  --primary-fixed: #d0e9d4;
-  --primary-fixed-dim: #b4cdb8;
-  --on-primary-fixed: #0b2013;
-  --on-primary-fixed-variant: #364c3c;
-  --inverse-primary: #b4cdb8;
-
-  --secondary: #974730;
-  --secondary-container: #fe997c;
-  --on-secondary: #ffffff;
-  --on-secondary-container: #772f1a;
-  --secondary-fixed: #ffdbd1;
-  --secondary-fixed-dim: #ffb5a0;
-  --on-secondary-fixed: #3b0900;
-  --on-secondary-fixed-variant: #78301b;
-
-  --tertiary: #221400;
-  --tertiary-container: #3d2700;
-  --on-tertiary: #ffffff;
-  --on-tertiary-container: #c08820;
-  --tertiary-fixed: #ffddae;
-  --tertiary-fixed-dim: #fbbb51;
-  --on-tertiary-fixed: #281800;
-  --on-tertiary-fixed-variant: #604100;
-
-  --surface: #fcf9f3;
-  --surface-bright: #fcf9f3;
-  --surface-dim: #dcdad4;
-  --surface-container-lowest: #ffffff;
-  --surface-container-low: #f6f3ed;
-  --surface-container: #f0eee8;
-  --surface-container-high: #ebe8e2;
-  --surface-container-highest: #e5e2dc;
-  --surface-variant: #e5e2dc;
-  --surface-tint: #4d6453;
-
-  --on-surface: #1c1c18;
-  --on-surface-variant: #434843;
-  --inverse-surface: #31312d;
-  --inverse-on-surface: #f3f0ea;
-
-  --outline: #737973;
-  --outline-variant: #c3c8c1;
-
-  --background: #fcf9f3;
-  --foreground: #1c1c18;
+  /* Nostalgic Paper & Neobrutalist Design Tokens */
+  --bg-paper: #faf8f5;
+  --bg-sidebar: #e3e7ec;
+  --kraft-card: #f4eee3;
+  --kraft-yellow: #fef08a;
+  --kraft-coral: #fed7aa;
+  --kraft-lavender: #e9d5ff;
+  --kraft-mint: #bbf7d0;
+  --kraft-pink: #fecdd3;
+  
+  --retro-black: #0c0f14;
+  --retro-red: #dc2626;
+  --retro-amber: #d97706;
+  --retro-emerald: #059669;
+  --retro-blue: #2563eb;
+  --retro-purple: #9333ea;
+  
+  --border-black: #0c0f14;
+  --grid-line: rgba(148, 163, 184, 0.35);
+  
+  --font-display: "Bebas Neue", "Anton", Impact, sans-serif;
+  --font-hand: "Caveat", "Patrick Hand", cursive;
+  --font-subhead: "Space Grotesk", sans-serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @theme {
-  --color-primary: #061b0e;
-  --color-primary-container: #1b3022;
-  --color-on-primary: #ffffff;
-  --color-on-primary-container: #819986;
-  --color-primary-fixed: #d0e9d4;
-  --color-primary-fixed-dim: #b4cdb8;
-  --color-on-primary-fixed: #0b2013;
-  --color-on-primary-fixed-variant: #364c3c;
-  --color-inverse-primary: #b4cdb8;
+  --color-paper: #faf8f5;
+  --color-sidebar: #e3e7ec;
+  --color-kraft: #f4eee3;
+  --color-kraft-yellow: #fef08a;
+  --color-kraft-coral: #fed7aa;
+  --color-kraft-lavender: #e9d5ff;
+  --color-kraft-mint: #bbf7d0;
+  --color-kraft-pink: #fecdd3;
+  
+  --color-retro-black: #0c0f14;
+  --color-retro-red: #dc2626;
+  --color-retro-amber: #d97706;
+  --color-retro-emerald: #059669;
+  --color-retro-blue: #2563eb;
+  --color-retro-purple: #9333ea;
 
-  --color-secondary: #974730;
-  --color-secondary-container: #fe997c;
-  --color-on-secondary: #ffffff;
-  --color-on-secondary-container: #772f1a;
-  --color-secondary-fixed: #ffdbd1;
-  --color-secondary-fixed-dim: #ffb5a0;
-  --color-on-secondary-fixed: #3b0900;
-  --color-on-secondary-fixed-variant: #78301b;
-
-  --color-tertiary: #221400;
-  --color-tertiary-container: #3d2700;
-  --color-on-tertiary: #ffffff;
-  --color-on-tertiary-container: #c08820;
-  --color-tertiary-fixed: #ffddae;
-  --color-tertiary-fixed-dim: #fbbb51;
-  --color-on-tertiary-fixed: #281800;
-  --color-on-tertiary-fixed-variant: #604100;
-
-  --color-surface: #fcf9f3;
-  --color-surface-bright: #fcf9f3;
-  --color-surface-dim: #dcdad4;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f6f3ed;
-  --color-surface-container: #f0eee8;
-  --color-surface-container-high: #ebe8e2;
-  --color-surface-container-highest: #e5e2dc;
-  --color-surface-variant: #e5e2dc;
-  --color-surface-tint: #4d6453;
-
-  --color-on-surface: #1c1c18;
-  --color-on-surface-variant: #434843;
-  --color-inverse-surface: #31312d;
-  --color-inverse-on-surface: #f3f0ea;
-
-  --color-outline: #737973;
-  --color-outline-variant: #c3c8c1;
-
-  --color-background: #fcf9f3;
-  --color-foreground: #1c1c18;
-
-  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Bebas Neue", "Anton", Impact, sans-serif;
+  --font-hand: "Caveat", "Patrick Hand", cursive;
+  --font-subhead: "Space Grotesk", sans-serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-  background-color: var(--surface);
-  color: var(--on-surface);
+  background-color: var(--bg-paper);
+  color: var(--retro-black);
   font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Editorial Typography Helpers */
+/* ── Typography Utility Classes ────────────────────────────────────── */
 .font-display {
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.font-hand {
+  font-family: "Caveat", "Patrick Hand", cursive;
+}
+
+.font-subhead {
+  font-family: "Space Grotesk", sans-serif;
 }
 
 .font-body {
-  font-family: "Inter", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-/* Custom Scrollbar for tactile elegance */
-::-webkit-scrollbar {
-  width: 8px;
+/* ── Textures & Notebook Backgrounds ──────────────────────────────── */
+.bg-graph-paper {
+  background-color: #e4e8ee;
+  background-image: 
+    linear-gradient(to right, rgba(100, 116, 139, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(100, 116, 139, 0.22) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.bg-creased-paper {
+  background-color: #faf8f5;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.8) 0%, transparent 70%),
+    linear-gradient(to right, rgba(0,0,0,0.015) 0%, rgba(0,0,0,0.035) 50%, rgba(0,0,0,0.01) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.01) 0%, rgba(0,0,0,0.02) 48%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.01) 52%, rgba(0,0,0,0.02) 100%);
+  background-size: 100% 100%, 100% 100%, 100% 800px;
+}
+
+.bg-card-grid {
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+.bg-kraft-texture {
+  background-color: #f4eee3;
+  background-image: radial-gradient(#d6ccb8 0.75px, transparent 0.75px);
+  background-size: 8px 8px;
+}
+
+/* ── Hard Neobrutalist Retro Shadows ─────────────────────────────── */
+.shadow-retro-sm {
+  box-shadow: 2px 2px 0px #0c0f14;
+}
+
+.shadow-retro {
+  box-shadow: 3.5px 3.5px 0px #0c0f14;
+}
+
+.shadow-retro-md {
+  box-shadow: 4px 4px 0px #0c0f14;
+}
+
+.shadow-retro-lg {
+  box-shadow: 6px 6px 0px #0c0f14;
+}
+
+.shadow-retro-xl {
+  box-shadow: 8px 8px 0px #0c0f14;
+}
+
+.shadow-retro-red {
+  box-shadow: 4px 4px 0px #dc2626;
+}
+
+.shadow-retro-yellow {
+  box-shadow: 4px 4px 0px #f59e0b;
+}
+
+/* ── Interactive Neobrutalist Buttons & Cards ───────────────────── */
+.btn-retro {
+  border: 2.5px solid #0c0f14;
+  box-shadow: 3.5px 3.5px 0px #0c0f14;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-retro:hover:not(:disabled) {
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 5px 5px 0px #0c0f14;
+}
+
+.btn-retro:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #0c0f14;
+}
+
+.card-retro {
+  border: 2.5px solid #0c0f14;
+  box-shadow: 4px 4px 0px #0c0f14;
+  background-color: #ffffff;
+  border-radius: 1.25rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-retro:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px #0c0f14;
+}
+
+/* ── Red Marker Brush Underline ─────────────────────────────────── */
+.marker-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.marker-underline::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: 2px;
   height: 8px;
+  background: rgba(239, 68, 68, 0.85);
+  border-radius: 4px;
+  z-index: -1;
+  transform: rotate(-1deg);
+}
+
+.marker-yellow::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: 2px;
+  height: 8px;
+  background: rgba(254, 240, 138, 0.9);
+  border-radius: 4px;
+  z-index: -1;
+  transform: rotate(0.5deg);
+}
+
+/* ── 3D Retro Text Fill ────────────────────────────────────────── */
+.retro-3d-text {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  color: #ef4444;
+  -webkit-text-stroke: 2px #0c0f14;
+  text-shadow: 
+    3px 3px 0px #0c0f14,
+    4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.retro-3d-white {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  color: #ffffff;
+  -webkit-text-stroke: 2px #0c0f14;
+  text-shadow: 
+    3px 3px 0px #0c0f14;
+}
+
+/* ── Spiral Notebook Binding Wire ───────────────────────────────── */
+.spiral-ring {
+  position: relative;
+  width: 20px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+.spiral-ring::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #3d4a60;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #e2e8f0 0%, #94a3b8 40%, #334155 100%);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.25);
+}
+
+.spiral-ring::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 5px;
+  background: #0f172a;
+  border-radius: 50%;
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.9);
+}
+
+/* ── Washi Tape & Pushpins ──────────────────────────────────────── */
+.washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1.5deg);
+  width: 70px;
+  height: 22px;
+  background-color: rgba(254, 240, 138, 0.85);
+  border-left: 2px dashed rgba(0,0,0,0.2);
+  border-right: 2px dashed rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+.pushpin-red {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle at 35% 35%, #f87171, #dc2626 60%, #991b1b 100%);
+  border: 2px solid #000;
+  border-radius: 50%;
+  box-shadow: 2px 3px 4px rgba(0,0,0,0.4), inset 1px 1px 2px rgba(255,255,255,0.6);
+  z-index: 20;
+}
+
+.pushpin-red::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 6px;
+  background: #475569;
+  border-radius: 1px;
+}
+
+/* ── Rubber Stamps ──────────────────────────────────────────────── */
+.rubber-stamp {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  text-transform: uppercase;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  border: 2.5px solid #dc2626;
+  color: #dc2626;
+  border-radius: 6px;
+  transform: rotate(-3deg);
+  box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.2);
+  opacity: 0.95;
+  user-select: none;
+  font-weight: bold;
+}
+
+.rubber-stamp-green {
+  border-color: #059669;
+  color: #059669;
+  box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.2);
+}
+
+.rubber-stamp-blue {
+  border-color: #2563eb;
+  color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+}
+
+/* ── Custom Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f6f3ed;
+  background: #e5e9ef;
+  border-left: 1.5px solid #0c0f14;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c3c8c1;
-  border-radius: 4px;
+  background: #0c0f14;
+  border-radius: 0px;
+  border: 1.5px solid #e5e9ef;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #819986;
+  background: #dc2626;
 }
 
-/* Material Symbols Icon helper */
+/* ── Material Symbols Icon helper ───────────────────────────────── */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
