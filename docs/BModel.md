@@ -31,18 +31,19 @@ We connect authentic regional artisans and cultural experiences with buyers, bui
 ## 3) Who are the users?
 
 ### A. Primary buyers
-- Families looking for meaningful gifts and cultural products
+- Families looking for decorative gifts and cultural products
 - Millennials and Gen Z interested in heritage, aesthetics, and authenticity
+- Millennials and Gen Z trying to get some sports but tired of same old games
 - Diaspora communities wanting products from home regions
-- Tourists and cultural travelers
+- Tourists and cultural travellers
 - Institutional buyers such as hotels, shops, event organizers, and offices
 
 ### B. Primary sellers
 - Local artisans and craft communities
 - Small family-run micro-businesses
-- Textile, bamboo, pottery, and food producers
+-* Textile, bamboo, pottery, and food producers
 - Rural entrepreneurs who do not have an online presence
-- Local storytellers, cooks, and cultural creators
+-* Local storytellers, cooks, and cultural creators
 
 ### C. Community and discovery users
 - People who want to learn about regional culture
@@ -62,13 +63,13 @@ We connect authentic regional artisans and cultural experiences with buyers, bui
 
 ### Buyer journey
 1. Discover through social media, search, curated collections, or word of mouth
-2. Browse products or experiences
-3. Check authenticity, artisan story, region, and price
-4. Ask questions or request custom order
-5. Place order via WhatsApp / contact / simple checkout
-6. Receive product and leave review
+3. Browse products or experiences
+4. Check authenticity, artisan story, region, and price
+5. Ask questions or request custom order
+6. Place order via WhatsApp* / contact* / simple checkout
+7. Receive product and leave review
 
-### Artisan journey
+### Artisan journey*
 1. Artisan registers with minimal information
 2. Platform verifies identity and product category
 3. Product is reviewed by a curator or admin
@@ -82,6 +83,7 @@ We connect authentic regional artisans and cultural experiences with buyers, bui
 2. User interacts, saves favorites, comments, and shares
 3. User joins challenge or community event
 4. User converts from learner to buyer or creator
+5. Bored group of friends/colleagues wanting to have fun
 
 This is like a digital village market: people do not just buy; they learn, trust, and come back.
 
@@ -97,6 +99,14 @@ This is like a digital village market: people do not just buy; they learn, trust
 - Ask only for minimum details required for purchase
 
 ### Artisan onboarding
+- Contact local vendors, village enthusiast, well craftsmen
+- Physical verification of product quality
+- Time period for them to craft as well as QPW(Quantity per Week)
+- Discuss pricing with them
+- Calculate our commission
+- Listing of items by the Admins
+
+### Artisan onboarding*
 - Keep onboarding extremely simple
 - Suggest mobile-first forms with photo uploads
 - Accept basic information like name, village, craft type, product photos, price range
@@ -104,10 +114,11 @@ This is like a digital village market: people do not just buy; they learn, trust
 - Offer help through WhatsApp and local language support
 
 ### Institutional onboarding
+- Physical visiting, asking for needed commodities
 - Create a business inquiry form
 - Add bulk order and partnership options
-- Provide sample catalog and pricing tiers
-- Keep sales conversations direct and human
+- Provide sample catalogue and pricing tiers
+- Keep sales conversations direct and human(with admins)
 
 This is like opening a shop in a busy market: first you need trust, then you need easy entry, then repeat customers.
 
@@ -120,11 +131,11 @@ This is like opening a shop in a busy market: first you need trust, then you nee
    - Example: 10%–15% commission
 2. Bulk-order commissions
    - For institutional or event purchases
-3. Premium vendor services
+3. Premium vendor services*
    - Featured listing, better visibility, photography help, translation support
-4. Institutional partnerships
+4. Institutional partnerships**
    - Corporate gifting, travel, exhibitions, cultural events
-5. Later payment and logistics support
+5. Later payment and logistics support*
    - Optional if scale is reached
 
 ### Why this works
