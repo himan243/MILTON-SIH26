@@ -6,16 +6,15 @@ import { AIProjectIdea } from '@/types';
 import {
   Sparkles,
   UploadCloud,
-  Image as ImageIcon,
-  Camera,
-  CheckCircle2,
+  Layers,
+  Wand2,
+  RefreshCw,
   Bookmark,
   BookmarkCheck,
   AlertTriangle,
-  Flame,
-  Layers,
-  Wand2,
-  RefreshCw
+  CheckCircle2,
+  Camera,
+  Folder
 } from 'lucide-react';
 
 const SAMPLE_INPUTS = [
@@ -41,7 +40,7 @@ const PRECOMPUTED_IDEAS: Record<string, AIProjectIdea[]> = {
     {
       id: 'ai-windchime-bamboo',
       title: 'Acoustic Northeast Bamboo Wind Chime',
-      concept: 'A soothing balcony chime tuned to traditional folk pentatonic scales using hollow bamboo tubes and river stones.',
+      concept: 'A soothing veranda chime tuned to traditional folk pentatonic scales using hollow bamboo tubes and river stones.',
       identifiedMaterials: ['Bamboo Scraps', 'Jute Twine', 'Coconut Shell Top'],
       difficulty: 'Easy',
       estimatedTime: '25 Minutes',
@@ -100,7 +99,7 @@ const PRECOMPUTED_IDEAS: Record<string, AIProjectIdea[]> = {
 };
 
 export default function CreateWithAIPage() {
-  const { saveAIProject, user, t } = useApp();
+  const { saveAIProject, user, t, triggerConfetti } = useApp();
   
   const [selectedImage, setSelectedImage] = useState<string>(SAMPLE_INPUTS[0].image);
   const [customText, setCustomText] = useState('');
@@ -136,50 +135,54 @@ export default function CreateWithAIPage() {
       setDetectedTags(['Cardboard Strips', 'Bamboo Splints', 'Upcycled Bottle', 'Cotton Yarn']);
       setGeneratedIdeas(PRECOMPUTED_IDEAS.default);
       setSelectedIdea(PRECOMPUTED_IDEAS.default[0]);
+      triggerConfetti();
     }, 1200);
   };
 
   const handleSave = (idea: AIProjectIdea) => {
     saveAIProject(idea, selectedImage);
     setSavedStatus((prev) => ({ ...prev, [idea.id]: true }));
+    triggerConfetti();
   };
 
   return (
-    <div className="min-h-screen bg-[#fcf9f3] py-12 sm:py-16">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="lg:pl-[354px] min-h-screen bg-[#faf8f5] bg-creased-paper py-10 sm:py-14 px-4 sm:px-6 lg:px-10 transition-all">
+      <div className="max-w-[1320px] mx-auto">
         
         {/* Header */}
-        <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#fe997c]/20 text-[#772f1a] text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-4 h-4 text-[#974730]" /> AI Multimodal Upcycling & Nostalgic Creation
+        <div className="max-w-3xl mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#fef08a] border-2 border-black rounded-full font-display text-xs uppercase tracking-wider shadow-retro-sm mb-3">
+            <Sparkles className="w-4 h-4 text-[#ef4444]" /> AI Multimodal Upcycling & Nostalgic Workshop
           </div>
-          <h1 className="font-display text-4xl sm:text-6xl font-bold text-[#061b0e] leading-tight mb-4">
-            {t.navCreateWithAI}
+          <h1 className="font-display text-4xl sm:text-6xl font-bold text-[#0c0f14] leading-[1.05] tracking-tight mb-3">
+            CREATE WITH <span className="marker-underline text-[#ef4444]">AI</span>
           </h1>
-          <p className="text-base text-[#434843] leading-relaxed">
-            Have leftover bamboo splints, discarded bottles, or coconut shells? Upload a photo or describe what you have. Our AI multimodal assistant will analyze the materials and formulate step-by-step blueprints for nostalgic crafts and toys.
+          <p className="font-hand text-xl text-zinc-700 font-bold leading-relaxed">
+            Have leftover bamboo twigs, discarded caps, or cloth scraps? Upload a photo or select materials — our AI will formulate authentic Northeast DIY craft blueprints.
           </p>
         </div>
 
-        {/* Top Split: Upload/Image Input & Material Recognizer */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-start">
+        {/* Top 2-Column Split: Upload / Camera Input & Vision Tag Recognizer */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-start">
           
-          {/* Left: Media Dropzone & Sample Picker */}
-          <div className="lg:col-span-6 bg-[#ffffff] rounded-3xl p-6 sm:p-8 border border-[#c3c8c1] shadow-lg space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-xl font-bold text-[#061b0e]">
-                1. Upload What You Have
+          {/* Left 6 Cols: Dropzone & Sample Material Picker */}
+          <div className="lg:col-span-6 card-retro bg-white p-6 sm:p-8 border-[2.5px] border-[#0c0f14] shadow-retro-md space-y-6 relative">
+            <div className="pushpin-red" />
+
+            <div className="flex items-center justify-between pr-6">
+              <h2 className="font-display text-2xl font-bold text-[#0c0f14]">
+                1. UPLOAD WHAT YOU HAVE
               </h2>
-              <span className="text-xs font-bold text-[#974730] uppercase">Image + Description</span>
+              <span className="font-display text-xs text-[#ef4444] uppercase">Vision Engine</span>
             </div>
 
-            {/* Dropzone & Preview */}
-            <div className="relative aspect-[16/10] rounded-2xl bg-[#f0eee8] border-2 border-dashed border-[#c3c8c1] overflow-hidden group">
+            {/* Dropzone / Preview */}
+            <div className="relative aspect-[16/10] rounded-xl bg-zinc-100 border-2 border-dashed border-black overflow-hidden group shadow-retro-sm">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={selectedImage} alt="Uploaded material" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-[#061b0e]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                <label className="px-4 py-2 bg-[#ffffff] text-[#061b0e] rounded-full text-xs font-bold uppercase cursor-pointer hover:bg-[#f6f3ed] shadow-lg flex items-center gap-1.5">
-                  <UploadCloud className="w-4 h-4" /> Change Photo
+              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                <label className="btn-retro px-4 py-2 bg-white text-[#0c0f14] rounded-xl font-display text-xs uppercase cursor-pointer shadow-retro-sm flex items-center gap-1.5">
+                  <UploadCloud className="w-4 h-4" /> CHANGE PHOTO
                   <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
                 </label>
               </div>
@@ -187,8 +190,8 @@ export default function CreateWithAIPage() {
 
             {/* Sample Material Pickers */}
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#737973] block mb-2">
-                Or Try Sample Household Materials:
+              <span className="font-display text-xs uppercase tracking-wider text-zinc-600 block mb-2">
+                Or Try Sample Household Scraps:
               </span>
               <div className="grid grid-cols-3 gap-2">
                 {SAMPLE_INPUTS.map((sample, idx) => (
@@ -196,29 +199,29 @@ export default function CreateWithAIPage() {
                     key={idx}
                     type="button"
                     onClick={() => handleSelectSample(sample)}
-                    className="p-2 rounded-xl bg-[#fcf9f3] border border-[#c3c8c1]/60 hover:border-[#974730] text-left transition-colors flex flex-col items-center text-center gap-1.5"
+                    className="p-2 rounded-xl bg-[#faf8f5] border-2 border-black hover:bg-[#fef08a] text-left transition-all flex flex-col items-center text-center gap-1 shadow-retro-sm"
                   >
-                    <div className="w-full h-12 rounded-lg overflow-hidden bg-[#e5e2dc]">
+                    <div className="w-full h-12 rounded-lg overflow-hidden border border-black bg-zinc-200">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={sample.image} alt={sample.name} className="w-full h-full object-cover" />
                     </div>
-                    <span className="text-[10px] font-bold text-[#061b0e] line-clamp-1">{sample.name}</span>
+                    <span className="font-display text-[11px] font-bold text-[#0c0f14] truncate w-full">{sample.name}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Text description input */}
+            {/* Extra notes */}
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#737973] mb-1.5">
+              <label className="block font-display text-xs uppercase tracking-wider text-zinc-600 mb-1">
                 Add extra notes / available tools (Optional)
               </label>
               <input
                 type="text"
                 value={customText}
                 onChange={(e) => setCustomText(e.target.value)}
-                placeholder="e.g., I also have scissors, a candle, and red paint..."
-                className="w-full px-4 py-2.5 rounded-xl bg-[#f6f3ed] border border-[#c3c8c1] text-xs text-[#061b0e] focus:border-[#974730] outline-none"
+                placeholder="e.g. I also have scissors, jute string, and acrylic paint..."
+                className="w-full px-3.5 py-2 bg-white border-2 border-black rounded-xl text-xs font-bold text-[#0c0f14] placeholder-zinc-400 outline-none shadow-retro-sm"
               />
             </div>
 
@@ -226,77 +229,77 @@ export default function CreateWithAIPage() {
             <button
               onClick={handleRunAIAnalysis}
               disabled={isAnalyzing}
-              className="w-full py-3.5 bg-[#061b0e] hover:bg-[#1b3022] text-[#fcf9f3] text-xs font-bold uppercase tracking-wider rounded-full shadow-lg transition-transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              className="btn-retro w-full py-3.5 bg-[#ef4444] hover:bg-[#dc2626] disabled:opacity-50 text-white font-display text-sm font-black uppercase tracking-wider rounded-xl shadow-retro flex items-center justify-center gap-2"
             >
               {isAnalyzing ? (
                 <>
-                  <RefreshCw className="w-4 h-4 animate-spin text-[#fbbb51]" /> Analyzing Multimodal Objects...
+                  <RefreshCw className="w-4 h-4 animate-spin text-[#fef08a]" /> ANALYZING RECYCLABLE OBJECTS...
                 </>
               ) : (
                 <>
-                  <Wand2 className="w-4 h-4 text-[#fbbb51]" /> Generate Creative Blueprints
+                  <Wand2 className="w-4 h-4 text-[#fef08a]" /> GENERATE CREATIVE BLUEPRINTS
                 </>
               )}
             </button>
           </div>
 
-          {/* Right: AI Vision Breakdown & Detected Materials */}
-          <div className="lg:col-span-6 bg-[#f0eee8] rounded-3xl p-6 sm:p-8 border border-[#c3c8c1] shadow-lg space-y-6">
+          {/* Right 6 Cols: AI Vision Breakdown & Suggested Blueprints */}
+          <div className="lg:col-span-6 card-retro bg-[#f4eee3] p-6 sm:p-8 border-[2.5px] border-[#0c0f14] shadow-retro-md space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-xl font-bold text-[#061b0e]">
-                2. AI Material Detection
+              <h2 className="font-display text-2xl font-bold text-[#0c0f14]">
+                2. AI MATERIAL DETECTION
               </h2>
-              <span className="text-xs font-bold text-[#1b3022] flex items-center gap-1">
-                <CheckCircle2 className="w-4 h-4 text-[#819986]" /> Vision Engine Ready
+              <span className="font-display text-xs text-[#059669] flex items-center gap-1">
+                <CheckCircle2 className="w-4 h-4 text-[#059669]" /> VISION READY
               </span>
             </div>
 
-            {/* Identified Tags */}
+            {/* Recognized Elements */}
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#737973] block mb-2">
+              <span className="font-display text-xs uppercase tracking-wider text-zinc-600 block mb-2">
                 Recognized Objects & Structural Elements:
               </span>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {detectedTags.map((tag, i) => (
                   <span
                     key={i}
-                    className="px-3 py-1 bg-[#ffffff] text-[#061b0e] text-xs font-bold rounded-full border border-[#c3c8c1] shadow-sm flex items-center gap-1.5"
+                    className="px-3 py-1 bg-white text-[#0c0f14] text-xs font-bold rounded-lg border-2 border-black shadow-retro-sm flex items-center gap-1.5"
                   >
-                    <Layers className="w-3.5 h-3.5 text-[#974730]" />
+                    <Layers className="w-3.5 h-3.5 text-[#ef4444]" />
                     {tag}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Idea Selection Carousel */}
+            {/* Suggested Blueprints Cards */}
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#737973] block mb-2">
+              <span className="font-display text-xs uppercase tracking-wider text-zinc-600 block mb-2">
                 Suggested Upcycling Projects ({generatedIdeas.length}):
               </span>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {generatedIdeas.map((idea) => (
                   <div
                     key={idea.id}
                     onClick={() => setSelectedIdea(idea)}
-                    className={`p-4 rounded-2xl border cursor-pointer transition-all ${
+                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
                       selectedIdea.id === idea.id
-                        ? 'bg-[#ffffff] border-[#974730] shadow-md ring-2 ring-[#974730]/20'
-                        : 'bg-[#ffffff]/60 border-[#c3c8c1]/60 hover:bg-[#ffffff]'
+                        ? 'bg-[#0c0f14] text-white border-black shadow-retro-yellow'
+                        : 'bg-white text-[#0c0f14] border-black hover:bg-[#fed7aa] shadow-retro-sm'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <h4 className="font-display text-base font-bold text-[#061b0e]">
+                      <h4 className="font-display text-xl font-bold leading-tight">
                         {idea.title}
                       </h4>
-                      <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-[#fbbb51]/20 text-[#281800]">
+                      <span className="font-display text-xs px-2 py-0.5 rounded-md bg-[#fef08a] text-[#0c0f14] font-bold">
                         +{idea.xpReward} XP
                       </span>
                     </div>
-                    <p className="text-xs text-[#434843] line-clamp-2 leading-relaxed">
+                    <p className={`text-xs line-clamp-2 leading-relaxed ${selectedIdea.id === idea.id ? 'text-zinc-300' : 'text-zinc-700'}`}>
                       {idea.concept}
                     </p>
-                    <div className="flex items-center gap-3 mt-2 text-[10px] text-[#737973] font-semibold">
+                    <div className="flex items-center gap-3 mt-2 text-[11px] font-hand font-bold">
                       <span>⏱️ {idea.estimatedTime}</span>
                       <span>•</span>
                       <span>Difficulty: {idea.difficulty}</span>
@@ -310,55 +313,57 @@ export default function CreateWithAIPage() {
 
         </div>
 
-        {/* Selected Project Full Detailed Blueprint */}
+        {/* Selected Project Full Detailed Blueprint Card */}
         {selectedIdea && (
-          <div className="bg-[#ffffff] rounded-3xl border border-[#c3c8c1] p-6 sm:p-10 shadow-xl space-y-8 animate-in fade-in">
-            
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-[#f0eee8]">
+          <div className="card-retro bg-white p-6 sm:p-10 border-[2.5px] border-[#0c0f14] shadow-retro-xl space-y-8 animate-in fade-in relative">
+            <div className="washi-tape" />
+
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b-2 border-dashed border-black/20">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-[#974730] block mb-1">
-                  Selected Blueprint
+                <span className="font-display text-xs uppercase tracking-wider text-[#ef4444] font-bold block mb-1">
+                  SELECTED BLUEPRINT
                 </span>
-                <h2 className="font-display text-2xl sm:text-4xl font-bold text-[#061b0e]">
+                <h2 className="font-display text-3xl sm:text-5xl font-bold text-[#0c0f14]">
                   {selectedIdea.title}
                 </h2>
-                <p className="text-sm text-[#434843] mt-2 max-w-2xl">
+                <p className="font-hand text-lg text-zinc-700 font-bold mt-1 max-w-2xl">
                   {selectedIdea.concept}
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => handleSave(selectedIdea)}
-                  className="px-6 py-3 bg-[#974730] hover:bg-[#772f1a] text-[#fcf9f3] text-xs font-bold uppercase tracking-wider rounded-full shadow-md transition-transform hover:-translate-y-0.5 flex items-center gap-2"
-                >
-                  {savedStatus[selectedIdea.id] ? (
-                    <>
-                      <BookmarkCheck className="w-4 h-4 fill-current" /> Saved to Archive (+{selectedIdea.xpReward} XP)
-                    </>
-                  ) : (
-                    <>
-                      <Bookmark className="w-4 h-4" /> Save Project & Earn XP
-                    </>
-                  )}
-                </button>
-              </div>
+              <button
+                onClick={() => handleSave(selectedIdea)}
+                className="btn-retro px-5 py-3 bg-[#0c0f14] hover:bg-zinc-800 text-[#fef08a] font-display text-xs font-black uppercase tracking-wider rounded-xl shadow-retro flex items-center gap-2"
+              >
+                {savedStatus[selectedIdea.id] ? (
+                  <>
+                    <BookmarkCheck className="w-4 h-4 text-[#ef4444] fill-current" /> SAVED TO PASSPORT (+{selectedIdea.xpReward} XP)
+                  </>
+                ) : (
+                  <>
+                    <Bookmark className="w-4 h-4 text-[#fef08a]" /> SAVE PROJECT & CLAIM XP
+                  </>
+                )}
+              </button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               
-              {/* Steps */}
+              {/* Instructions */}
               <div className="lg:col-span-8 space-y-4">
-                <h3 className="font-display text-xl font-bold text-[#061b0e] mb-2">
-                  Step-by-Step DIY Instructions
+                <h3 className="font-display text-2xl font-bold text-[#0c0f14] mb-2">
+                  STEP-BY-STEP DIY INSTRUCTIONS
                 </h3>
                 <div className="space-y-3">
                   {selectedIdea.stepByStep.map((step, idx) => (
-                    <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl bg-[#fcf9f3] border border-[#c3c8c1]/40">
-                      <div className="w-6 h-6 rounded-full bg-[#1b3022] text-[#fcf9f3] text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    <div
+                      key={idx}
+                      className="flex items-start gap-3.5 p-4 rounded-xl bg-[#faf8f5] border-2 border-black shadow-retro-sm"
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-[#ef4444] text-white font-display text-sm font-bold flex items-center justify-center shrink-0 border border-black shadow-retro-sm">
                         {idx + 1}
                       </div>
-                      <p className="text-xs sm:text-sm text-[#1c1c18] leading-relaxed">
+                      <p className="text-xs sm:text-sm text-zinc-800 font-medium leading-relaxed mt-0.5">
                         {step}
                       </p>
                     </div>
@@ -367,11 +372,11 @@ export default function CreateWithAIPage() {
 
                 {/* Safety Considerations */}
                 {selectedIdea.safetyNotes && (
-                  <div className="p-4 rounded-2xl bg-[#fe997c]/15 border border-[#fe997c]/40 flex items-start gap-3 mt-6">
-                    <AlertTriangle className="w-5 h-5 text-[#974730] shrink-0 mt-0.5" />
+                  <div className="p-4 rounded-xl bg-[#fed7aa] border-2 border-black flex items-start gap-3 mt-6 shadow-retro-sm">
+                    <AlertTriangle className="w-5 h-5 text-[#ef4444] shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-xs font-bold text-[#772f1a] uppercase mb-1">Safety & Supervision</div>
-                      <ul className="text-xs text-[#772f1a] space-y-1">
+                      <div className="font-display text-xs font-bold text-[#0c0f14] uppercase mb-0.5">SAFETY & SUPERVISION</div>
+                      <ul className="text-xs text-zinc-900 font-medium space-y-0.5">
                         {selectedIdea.safetyNotes.map((note, i) => (
                           <li key={i}>• {note}</li>
                         ))}
@@ -381,41 +386,36 @@ export default function CreateWithAIPage() {
                 )}
               </div>
 
-              {/* Sidebar Info: Cultural Link & Visual Preview */}
+              {/* Sidebar Info */}
               <div className="lg:col-span-4 space-y-6">
-                
-                {/* Visual Preview Card */}
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#f0eee8] border border-[#c3c8c1]">
+                <div className="aspect-[4/3] rounded-xl overflow-hidden border-2 border-black shadow-retro-sm bg-zinc-200">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={selectedIdea.previewImageUrl} alt={selectedIdea.title} className="w-full h-full object-cover" />
                 </div>
 
-                {/* Cultural Connection */}
                 {selectedIdea.culturalConnection && (
-                  <div className="p-4 rounded-2xl bg-[#f0eee8] border border-[#c3c8c1] space-y-2">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#974730]">
-                      Northeast Cultural Roots
+                  <div className="card-retro bg-[#f4eee3] p-4 border-2 border-black space-y-1">
+                    <div className="font-display text-xs uppercase tracking-wider text-[#ef4444] font-bold">
+                      NORTHEAST CULTURAL ROOTS
                     </div>
-                    <p className="text-xs text-[#434843] leading-relaxed italic">
+                    <p className="font-hand text-sm text-zinc-700 font-bold italic leading-relaxed">
                       &quot;{selectedIdea.culturalConnection}&quot;
                     </p>
                   </div>
                 )}
 
-                {/* Skills Acquired */}
-                <div className="p-4 rounded-2xl bg-[#fcf9f3] border border-[#c3c8c1] space-y-2">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-[#737973]">
-                    Skills Progressed
+                <div className="card-retro bg-white p-4 border-2 border-black space-y-2">
+                  <div className="font-display text-xs uppercase tracking-wider text-zinc-500 font-bold">
+                    SKILLS ACQUIRED
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1">
                     {selectedIdea.skillsLearned.map((sk, i) => (
-                      <span key={i} className="px-2.5 py-1 bg-[#ffffff] text-[#061b0e] text-xs font-semibold rounded-full border border-[#c3c8c1]/40">
+                      <span key={i} className="px-2.5 py-0.5 bg-[#fef08a] text-[#0c0f14] text-xs font-bold rounded-lg border border-black shadow-retro-sm">
                         {sk}
                       </span>
                     ))}
                   </div>
                 </div>
-
               </div>
 
             </div>

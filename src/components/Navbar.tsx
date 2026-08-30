@@ -5,47 +5,32 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import { SupportedLanguage, UserRole } from '@/types';
+import { Sidebar } from './Sidebar';
 import {
   Search, Globe, Bell, User, Shield, Hammer,
-  Menu, X, Flame, Sparkles, ChevronDown,
-  Gamepad2, UtensilsCrossed, Users, Trophy, Package
+  X, Flame, Sparkles, Plus,
+  Bookmark
 } from 'lucide-react';
-
-// ── Dropdown section type ──────────────────────────────────────────────────
-interface DropdownItem {
-  name: string;
-  href: string;
-  icon: React.ReactNode;
-  desc: string;
-}
-
-interface NavItem {
-  name: string;
-  href: string;
-  dropdown?: DropdownItem[];
-}
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const {
-    user, role, setRole, language, setLanguage, t,
+    user, role, setRole, language, setLanguage,
     setIsSearchOpen, setIsPreserveModalOpen, notifications, markNotificationsAsRead
   } = useApp();
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isRoleOpen, setIsRoleOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
   // Close all dropdowns when clicking outside
-  const navRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) {
-        setOpenDropdown(null);
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
         setIsLangOpen(false);
         setIsNotifOpen(false);
         setIsRoleOpen(false);
@@ -54,62 +39,6 @@ export const Navbar: React.FC = () => {
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
-
-  // ── 3 main nav items with rich dropdowns ────────────────────────────────
-  const navItems: NavItem[] = [
-    {
-      name: 'Discover',
-      href: '/',
-      dropdown: [
-        {
-          name: 'Traditional Crafts',
-          href: '/crafts',
-          icon: <Hammer className="w-4 h-4 text-[#c08820]" />,
-          desc: 'Bamboo weaving, Longpi pottery & silk'
-        },
-        {
-          name: 'Food Stories',
-          href: '/food-stories',
-          icon: <UtensilsCrossed className="w-4 h-4 text-[#1b3022]" />,
-          desc: 'Khar, smoked pork & culinary heritage'
-        },
-        {
-          name: 'Community',
-          href: '/community',
-          icon: <Users className="w-4 h-4 text-[#974730]" />,
-          desc: 'Nearby sessions & preserved memories'
-        },
-        {
-          name: 'Cultural Quests',
-          href: '/challenges',
-          icon: <Trophy className="w-4 h-4 text-[#fbbb51]" />,
-          desc: 'Daily missions & heritage badges'
-        }
-      ]
-    },
-    {
-      name: 'Forgotten Games',
-      href: '/games',
-    },
-    {
-      name: 'Marketplace',
-      href: '/marketplace',
-      dropdown: [
-        {
-          name: 'Browse Artisan Crafts',
-          href: '/marketplace',
-          icon: <Package className="w-4 h-4 text-[#974730]" />,
-          desc: 'Verified handcrafted goods from Northeast'
-        },
-        {
-          name: 'Artisan Portal',
-          href: '/artisan-dashboard',
-          icon: <Hammer className="w-4 h-4 text-[#c08820]" />,
-          desc: 'List products & manage inquiries'
-        }
-      ]
-    }
-  ];
 
   const languages: Array<{ code: SupportedLanguage; label: string; native: string }> = [
     { code: 'en', label: 'English', native: 'English' },
@@ -126,296 +55,226 @@ export const Navbar: React.FC = () => {
     { code: 'guest', label: 'Guest Visitor', desc: 'Read-only public browsing', icon: <Globe className="w-4 h-4 text-stone-600" /> }
   ];
 
-  const isActive = (path: string) =>
-    path === '/' ? pathname === '/' : pathname.startsWith(path);
-
-  const isGroupActive = (item: NavItem) => {
-    if (isActive(item.href)) return true;
-    return item.dropdown?.some(d => isActive(d.href)) ?? false;
-  };
-
-  const closeAll = () => {
-    setIsLangOpen(false);
-    setIsNotifOpen(false);
-    setIsRoleOpen(false);
-    setOpenDropdown(null);
-  };
-
   return (
-    <header
-      ref={navRef}
-      className="fixed top-0 left-0 right-0 z-50 bg-[#fcf9f3]/92 backdrop-blur-xl border-b border-[#c3c8c1]/40 shadow-[0_2px_16px_rgba(6,27,14,0.04)]"
-    >
-      <div className="max-w-[1360px] mx-auto h-[68px] px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+    <>
+      {/* Permanent / Drawer Sidebar */}
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-        {/* Brand */}
-        <Link href="/" className="group flex items-center gap-2.5 shrink-0">
-          <div className="w-9 h-9 rounded-full bg-[#1b3022] flex items-center justify-center shadow group-hover:scale-105 transition-transform">
-            <span className="font-display font-bold text-lg text-[#fbbb51]">N</span>
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="font-display text-[1.15rem] font-bold tracking-tight text-[#061b0e] group-hover:text-[#974730] transition-colors">
-              Nostalgic Hub
-            </span>
-            <span className="text-[9px] uppercase font-bold tracking-widest text-[#772f1a] hidden sm:block">
-              Northeast Discovery
-            </span>
-          </div>
-        </Link>
-
-        {/* Desktop Nav — 3 items */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {navItems.map((item) => {
-            const active = isGroupActive(item);
-            const isOpen = openDropdown === item.name;
-
-            return (
-              <div key={item.name} className="relative">
-                {item.dropdown ? (
-                  <button
-                    onClick={() => setOpenDropdown(isOpen ? null : item.name)}
-                    className={`flex items-center gap-1 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-150 ${
-                      active || isOpen
-                        ? 'bg-[#1b3022] text-[#fcf9f3] shadow-sm'
-                        : 'text-[#434843] hover:text-[#061b0e] hover:bg-[#ebe8e2]'
-                    }`}
-                  >
-                    {item.name}
-                    <ChevronDown
-                      className={`w-3 h-3 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                    />
-                  </button>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className={`flex items-center gap-1 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-150 ${
-                      active
-                        ? 'bg-[#1b3022] text-[#fcf9f3] shadow-sm'
-                        : 'text-[#434843] hover:text-[#061b0e] hover:bg-[#ebe8e2]'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                )}
-
-                {/* Mega dropdown */}
-                {item.dropdown && isOpen && (
-                  <div className="absolute left-0 top-full mt-2 w-72 bg-[#ffffff] border border-[#c3c8c1] rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                    <div className="px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-wider text-[#737973] border-b border-[#f0eee8] mb-1">
-                      {item.name === 'Discover' ? 'Cultural Heritage Sections' : 'Marketplace'}
-                    </div>
-                    {item.dropdown.map((d) => (
-                      <Link
-                        key={d.href}
-                        href={d.href}
-                        onClick={() => setOpenDropdown(null)}
-                        className={`flex items-start gap-3 px-3 py-2.5 rounded-xl transition-colors ${
-                          isActive(d.href) ? 'bg-[#f0eee8]' : 'hover:bg-[#f6f3ed]'
-                        }`}
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-[#f0eee8] flex items-center justify-center shrink-0">
-                          {d.icon}
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold text-[#061b0e]">{d.name}</div>
-                          <div className="text-[10px] text-[#737973] leading-tight mt-0.5">{d.desc}</div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </nav>
-
-        {/* Right Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-
-          {/* Search */}
-          <button
-            onClick={() => { setIsSearchOpen(true); closeAll(); }}
-            className="p-2 rounded-full text-[#434843] hover:text-[#061b0e] hover:bg-[#ebe8e2] transition-colors"
-            aria-label="Search"
-          >
-            <Search className="w-4 h-4" />
-          </button>
-
-          {/* Language */}
-          <div className="relative">
+      {/* Top Paper Header Bar */}
+      <header
+        ref={headerRef}
+        className="fixed top-0 left-0 right-0 z-40 h-[72px] lg:pl-[290px] bg-[#faf8f5]/90 backdrop-blur-md border-b-2 border-[#0c0f14]/15 transition-all"
+      >
+        <div className="max-w-[1400px] h-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+          
+          {/* Left Greeting & Brand */}
+          <div className="flex items-center gap-3">
+            {/* Mobile Brand Link */}
             <button
-              onClick={() => { setIsLangOpen(!isLangOpen); setIsNotifOpen(false); setIsRoleOpen(false); setOpenDropdown(null); }}
-              className="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#1c1c18] bg-[#ebe8e2] hover:bg-[#e5e2dc] transition-colors"
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="lg:hidden flex items-baseline gap-1 group text-left"
+              title="Open Navigation"
             >
-              <Globe className="w-3.5 h-3.5 text-[#974730]" />
-              {language.toUpperCase()}
-            </button>
-            {isLangOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-[#ffffff] border border-[#c3c8c1] rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="px-3 py-1.5 text-[10px] font-bold text-[#737973] uppercase tracking-wider border-b border-[#f0eee8] mb-1">Language</div>
-                {languages.map((l) => (
-                  <button key={l.code} onClick={() => { setLanguage(l.code); setIsLangOpen(false); }}
-                    className={`w-full text-left px-3 py-2 rounded-xl text-xs font-medium flex items-center justify-between transition-colors ${language === l.code ? 'bg-[#1b3022] text-[#fcf9f3]' : 'hover:bg-[#f6f3ed] text-[#1c1c18]'}`}
-                  >
-                    <span>{l.label}</span>
-                    <span className="text-[10px] opacity-70">{l.native}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Notifications */}
-          <div className="relative">
-            <button
-              onClick={() => { setIsNotifOpen(!isNotifOpen); setIsLangOpen(false); setIsRoleOpen(false); setOpenDropdown(null); if (unreadCount > 0) markNotificationsAsRead(); }}
-              className="relative p-2 rounded-full text-[#434843] hover:text-[#061b0e] hover:bg-[#ebe8e2] transition-colors"
-              aria-label="Notifications"
-            >
-              <Bell className="w-4 h-4" />
-              {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 w-2 h-2 bg-[#974730] rounded-full ring-2 ring-[#fcf9f3] animate-pulse" />
-              )}
-            </button>
-            {isNotifOpen && (
-              <div className="absolute right-0 mt-2 w-80 bg-[#ffffff] border border-[#c3c8c1] rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-2">
-                <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#f0eee8]">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#061b0e]">Notifications</span>
-                  <span className="text-[10px] text-[#974730] font-medium">{notifications.length} updates</span>
-                </div>
-                <div className="space-y-2 max-h-72 overflow-y-auto">
-                  {notifications.map((n) => (
-                    <div key={n.id} className="p-2.5 rounded-xl bg-[#f6f3ed] hover:bg-[#f0eee8] transition-colors">
-                      <div className="text-xs font-bold text-[#061b0e]">{n.title}</div>
-                      <div className="text-[11px] text-[#434843] mt-0.5 leading-relaxed">{n.message}</div>
-                      <div className="text-[10px] text-[#737973] mt-1">{n.timestamp}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* XP Pill */}
-          <Link
-            href="/profile"
-            className="hidden md:flex items-center gap-1.5 bg-[#f0eee8] hover:bg-[#e5e2dc] px-3 py-1.5 rounded-full border border-[#c3c8c1]/60 transition-colors"
-          >
-            <Sparkles className="w-3 h-3 text-[#c08820]" />
-            <span className="text-xs font-bold text-[#1b3022]">{user.xp} XP</span>
-            <span className="w-px h-3 bg-[#c3c8c1]" />
-            <Flame className="w-3 h-3 text-[#974730]" />
-            <span className="text-xs font-bold text-[#974730]">{user.streakDays}d</span>
-          </Link>
-
-          {/* Role / Profile Switcher */}
-          <div className="relative">
-            <button
-              onClick={() => { setIsRoleOpen(!isRoleOpen); setIsLangOpen(false); setIsNotifOpen(false); setOpenDropdown(null); }}
-              className="flex items-center gap-1.5 pl-1.5 pr-3 py-1 bg-[#1b3022] text-[#fcf9f3] rounded-full hover:bg-[#061b0e] transition-all shadow-sm"
-            >
-              <div className="w-6 h-6 rounded-full bg-[#fbbb51] text-[#1b3022] flex items-center justify-center font-bold text-xs">
-                {user.name.charAt(0)}
-              </div>
-              <span className="text-xs font-semibold capitalize hidden sm:inline">{role}</span>
+              <span className="retro-3d-text text-2xl font-display tracking-wider">NOST</span>
+              <span className="font-display text-xs font-black text-[#0c0f14]">HUB</span>
             </button>
 
-            {isRoleOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-[#ffffff] border border-[#c3c8c1] rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-2">
-                <div className="p-2 bg-[#f6f3ed] rounded-xl mb-3">
-                  <div className="text-xs font-bold text-[#061b0e]">{user.name}</div>
-                  <div className="text-[10px] text-[#737973] truncate">{user.email}</div>
-                  <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#974730]">
-                    Role: {role.toUpperCase()} • Level {user.level}
-                  </div>
-                </div>
-                <div className="text-[10px] font-bold text-[#737973] uppercase tracking-wider px-2 mb-1.5">Switch Role</div>
-                <div className="space-y-1">
-                  {roles.map((r) => (
-                    <button key={r.code} onClick={() => { setRole(r.code); setIsRoleOpen(false); }}
-                      className={`w-full text-left p-2 rounded-xl text-xs flex items-start gap-2.5 transition-colors ${role === r.code ? 'bg-[#1b3022] text-[#fcf9f3]' : 'hover:bg-[#f6f3ed] text-[#1c1c18]'}`}
-                    >
-                      <div className="mt-0.5">{r.icon}</div>
-                      <div>
-                        <div className="font-bold">{r.label}</div>
-                        <div className={`text-[10px] ${role === r.code ? 'text-[#b4cdb8]' : 'text-[#737973]'}`}>{r.desc}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-                <div className="mt-3 pt-2 border-t border-[#f0eee8] flex flex-col gap-1">
-                  <Link href="/profile" onClick={() => setIsRoleOpen(false)}
-                    className="px-3 py-2 text-xs font-medium text-[#061b0e] hover:bg-[#f6f3ed] rounded-lg">
-                    Your Nostalgia Journey
-                  </Link>
-                  {role === 'admin' && (
-                    <Link href="/admin" onClick={() => setIsRoleOpen(false)}
-                      className="px-3 py-2 text-xs font-bold text-[#974730] hover:bg-[#fe997c]/20 rounded-lg flex items-center gap-1.5">
-                      <Shield className="w-3.5 h-3.5" /> Curator Admin Dashboard
-                    </Link>
-                  )}
-                  {role === 'artisan' && (
-                    <Link href="/artisan-dashboard" onClick={() => setIsRoleOpen(false)}
-                      className="px-3 py-2 text-xs font-bold text-[#c08820] hover:bg-[#fbbb51]/20 rounded-lg flex items-center gap-1.5">
-                      <Hammer className="w-3.5 h-3.5" /> Artisan Vendor Portal
-                    </Link>
-                  )}
-                </div>
-              </div>
-            )}
+            {/* Handwritten Greeting from Template 1.0: "Welcome to my blogiverse! ~~~" */}
+            <div className="flex flex-col">
+              <span className="font-hand text-base sm:text-xl font-bold text-[#0c0f14] leading-tight truncate">
+                Welcome to Nostalgic Hub!
+              </span>
+              <svg className="w-24 sm:w-28 h-2 text-[#ef4444]" viewBox="0 0 100 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 5.5C12 1.5 24 7.5 35 3.5C46 -0.5 58 7.5 70 3.5C82 -0.5 94 6 99 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+              </svg>
+            </div>
           </div>
 
-          {/* Mobile Hamburger */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-[#061b0e] hover:bg-[#ebe8e2]"
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </div>
+          {/* Right Controls & Pills */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            
+            {/* Search Button */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl border-2 border-[#0c0f14] bg-white text-xs font-bold text-[#0c0f14] shadow-retro-sm hover:bg-[#fef08a] transition-all"
+              aria-label="Search"
+            >
+              <Search className="w-3.5 h-3.5" />
+              <span className="hidden md:inline font-display text-sm uppercase tracking-wider">SEARCH</span>
+            </button>
 
-      {/* Mobile Drawer */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden bg-[#fcf9f3] border-b border-[#c3c8c1] px-5 py-5 space-y-4 animate-in slide-in-from-top duration-200">
-          {navItems.map((item) => (
-            <div key={item.name}>
-              <Link
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block px-4 py-2.5 rounded-xl text-sm font-bold uppercase tracking-wider transition-colors ${
-                  isGroupActive(item) ? 'bg-[#1b3022] text-[#fcf9f3]' : 'bg-[#f0eee8] text-[#061b0e]'
-                }`}
+            {/* Language Selector */}
+            <div className="relative">
+              <button
+                onClick={() => { setIsLangOpen(!isLangOpen); setIsNotifOpen(false); setIsRoleOpen(false); }}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border-2 border-[#0c0f14] bg-white text-xs font-display tracking-wider uppercase text-[#0c0f14] shadow-retro-sm hover:bg-[#fed7aa] transition-all"
               >
-                {item.name}
-              </Link>
-              {item.dropdown && (
-                <div className="mt-2 pl-3 space-y-1">
-                  {item.dropdown.map((d) => (
-                    <Link
-                      key={d.href}
-                      href={d.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-[#434843] hover:bg-[#f0eee8] hover:text-[#061b0e]"
+                <Globe className="w-3.5 h-3.5 text-[#ef4444]" />
+                <span>{language.toUpperCase()}</span>
+              </button>
+
+              {isLangOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-[#faf8f5] border-2 border-black rounded-2xl shadow-retro-md p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="px-3 py-1 text-[10px] font-display uppercase tracking-widest text-zinc-500 border-b border-zinc-300 mb-1">
+                    Select Language
+                  </div>
+                  {languages.map((l) => (
+                    <button
+                      key={l.code}
+                      onClick={() => { setLanguage(l.code); setIsLangOpen(false); }}
+                      className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-bold flex items-center justify-between transition-colors ${
+                        language === l.code
+                          ? 'bg-[#0c0f14] text-[#fef08a]'
+                          : 'hover:bg-zinc-200 text-[#0c0f14]'
+                      }`}
                     >
-                      {d.icon}
-                      {d.name}
-                    </Link>
+                      <span>{l.label}</span>
+                      <span className="text-[10px] opacity-75 font-hand text-sm">{l.native}</span>
+                    </button>
                   ))}
                 </div>
               )}
             </div>
-          ))}
 
-          <button
-            onClick={() => { setIsPreserveModalOpen(true); setIsMobileMenuOpen(false); }}
-            className="w-full py-3 bg-[#974730] text-[#fcf9f3] text-xs font-bold uppercase rounded-xl tracking-wider mt-2"
-          >
-            + Submit Cultural Memory
-          </button>
+            {/* Notifications */}
+            <div className="relative">
+              <button
+                onClick={() => { setIsNotifOpen(!isNotifOpen); setIsLangOpen(false); setIsRoleOpen(false); if (unreadCount > 0) markNotificationsAsRead(); }}
+                className="relative p-2 rounded-xl border-2 border-[#0c0f14] bg-white text-[#0c0f14] shadow-retro-sm hover:bg-[#e9d5ff] transition-all"
+                aria-label="Notifications"
+              >
+                <Bell className="w-4 h-4" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-[#ef4444] border-2 border-black rounded-full animate-bounce" />
+                )}
+              </button>
+
+              {isNotifOpen && (
+                <div className="absolute right-0 mt-2 w-80 bg-[#faf8f5] border-2 border-black rounded-2xl shadow-retro-lg p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="flex items-center justify-between pb-2 mb-2 border-b-2 border-dashed border-black/30">
+                    <span className="font-display text-sm font-bold uppercase tracking-wider text-[#0c0f14]">
+                      Notifications
+                    </span>
+                    <span className="px-2 py-0.5 bg-[#ef4444] text-white text-[10px] font-bold rounded-full">
+                      {notifications.length} NEW
+                    </span>
+                  </div>
+                  <div className="space-y-2 max-h-72 overflow-y-auto">
+                    {notifications.map((n) => (
+                      <div key={n.id} className="p-2.5 rounded-xl bg-white border border-black/30 shadow-retro-sm">
+                        <div className="text-xs font-bold text-[#0c0f14]">{n.title}</div>
+                        <div className="text-[11px] text-zinc-700 mt-0.5 font-hand text-sm leading-tight">{n.message}</div>
+                        <div className="text-[9px] text-zinc-500 mt-1 uppercase font-bold">{n.timestamp}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* XP Streak Pill */}
+            <Link
+              href="/profile"
+              className="hidden sm:flex items-center gap-2 bg-[#f4eee3] px-3 py-1.5 rounded-xl border-2 border-[#0c0f14] shadow-retro-sm hover:translate-y-[-1px] transition-all"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#d97706]" />
+              <span className="font-display text-sm font-bold text-[#0c0f14]">{user.xp} XP</span>
+              <span className="w-px h-3.5 bg-black/30" />
+              <Flame className="w-3.5 h-3.5 text-[#ef4444]" />
+              <span className="font-display text-sm font-bold text-[#ef4444]">{user.streakDays}d</span>
+            </Link>
+
+            {/* Preserve Memory CTA Button */}
+            <button
+              onClick={() => setIsPreserveModalOpen(true)}
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#fef08a] hover:bg-[#fde047] text-[#0c0f14] font-display text-xs font-black uppercase border-2 border-black rounded-xl shadow-retro-sm hover:translate-y-[-1px] active:translate-y-[1px] transition-all"
+            >
+              <Plus className="w-3.5 h-3.5 stroke-[3]" />
+              <span>PRESERVE</span>
+            </button>
+
+            {/* Role Switcher Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => { setIsRoleOpen(!isRoleOpen); setIsLangOpen(false); setIsNotifOpen(false); }}
+                className="flex items-center gap-1.5 pl-1.5 pr-2.5 py-1 bg-[#0c0f14] text-white rounded-xl border-2 border-black shadow-retro-sm hover:bg-zinc-800 transition-all"
+              >
+                <div className="w-6 h-6 rounded-lg bg-[#fef08a] text-[#0c0f14] flex items-center justify-center font-display font-bold text-xs border border-black">
+                  {user.name.charAt(0)}
+                </div>
+                <span className="font-display text-xs tracking-wider uppercase hidden sm:inline">{role}</span>
+              </button>
+
+              {isRoleOpen && (
+                <div className="absolute right-0 mt-2 w-72 bg-[#faf8f5] border-2 border-black rounded-2xl shadow-retro-lg p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="p-2.5 bg-[#f4eee3] border-2 border-black rounded-xl mb-3 shadow-retro-sm">
+                    <div className="font-display text-sm font-bold text-[#0c0f14]">{user.name}</div>
+                    <div className="text-[10px] text-zinc-600 truncate">{user.email}</div>
+                    <div className="mt-1 inline-block px-2 py-0.5 bg-[#ef4444] text-white text-[9px] font-bold uppercase rounded-md">
+                      Role: {role} • Lvl {user.level}
+                    </div>
+                  </div>
+
+                  <div className="text-[10px] font-display uppercase tracking-widest text-zinc-500 px-2 mb-1.5">
+                    Switch User Role
+                  </div>
+                  <div className="space-y-1">
+                    {roles.map((r) => (
+                      <button
+                        key={r.code}
+                        onClick={() => { setRole(r.code); setIsRoleOpen(false); }}
+                        className={`w-full text-left p-2 rounded-xl text-xs flex items-start gap-2.5 border transition-all ${
+                          role === r.code
+                            ? 'bg-[#0c0f14] text-[#fef08a] border-black shadow-retro-sm'
+                            : 'border-transparent hover:bg-zinc-200 text-[#0c0f14]'
+                        }`}
+                      >
+                        <div className="mt-0.5">{r.icon}</div>
+                        <div>
+                          <div className="font-display text-sm tracking-wide">{r.label}</div>
+                          <div className={`text-[10px] ${role === r.code ? 'text-zinc-300' : 'text-zinc-500'}`}>
+                            {r.desc}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="mt-3 pt-2 border-t-2 border-dashed border-black/30 flex flex-col gap-1">
+                    <Link
+                      href="/profile"
+                      onClick={() => setIsRoleOpen(false)}
+                      className="px-3 py-1.5 text-xs font-bold text-[#0c0f14] hover:bg-[#fef08a] rounded-lg transition-colors flex items-center justify-between"
+                    >
+                      <span>Nostalgia Passport</span>
+                      <Bookmark className="w-3.5 h-3.5" />
+                    </Link>
+                    {role === 'admin' && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setIsRoleOpen(false)}
+                        className="px-3 py-1.5 text-xs font-bold text-[#ef4444] hover:bg-red-100 rounded-lg transition-colors flex items-center gap-1.5"
+                      >
+                        <Shield className="w-3.5 h-3.5" /> Curator Admin Panel
+                      </Link>
+                    )}
+                    {role === 'artisan' && (
+                      <Link
+                        href="/artisan-dashboard"
+                        onClick={() => setIsRoleOpen(false)}
+                        className="px-3 py-1.5 text-xs font-bold text-[#d97706] hover:bg-amber-100 rounded-lg transition-colors flex items-center gap-1.5"
+                      >
+                        <Hammer className="w-3.5 h-3.5" /> Artisan Vendor Studio
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+          </div>
         </div>
-      )}
-    </header>
+      </header>
+    </>
   );
 };
