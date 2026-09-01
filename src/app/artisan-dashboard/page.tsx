@@ -5,333 +5,245 @@ import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import {
   Hammer,
-  Plus,
-  Package,
-  MessageSquare,
+  Sparkles,
   Clock,
   CheckCircle2,
-  AlertCircle,
-  Sparkles,
-  DollarSign
+  Send,
+  ShieldCheck,
+  Package,
+  Layers,
+  HeartHandshake,
+  Award,
+  ArrowRight
 } from 'lucide-react';
 
 export default function ArtisanDashboardPage() {
-  const { products, addProduct, inquiries, user, role, setRole, t, triggerConfetti } = useApp();
-  
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [craftName, setCraftName] = useState('Bamboo & Cane');
-  const [priceInr, setPriceInr] = useState(1200);
-  const [stockAvailable, setStockAvailable] = useState(10);
-  const [description, setDescription] = useState('');
-  const [dimensions, setDimensions] = useState('16 inches x 10 inches');
-  const [materialDetails, setMaterialDetails] = useState('Organic Assam Bamboo & Cane');
-  const [estimatedCraftingDays, setEstimatedCraftingDays] = useState(4);
-  const [supportsBulkOrders, setSupportsBulkOrders] = useState(true);
-  const [minBulkQuantity, setMinBulkQuantity] = useState(10);
-  const [imageUrl, setImageUrl] = useState('https://images.unsplash.com/photo-1590402494682-cd3fb53b1f70?auto=format&fit=crop&w=800&q=80');
+  const { joinArtisanWaitlist, artisanWaitlist, user, triggerConfetti } = useApp();
 
-  const myProducts = products.filter((p) => p.artisanId === user.id || role === 'admin');
+  const [artisanName, setArtisanName] = useState(user.name !== 'Guest Visitor' ? user.name : '');
+  const [craftCategory, setCraftCategory] = useState('Bamboo & Cane Weaving');
+  const [location, setLocation] = useState(user.region || 'Guwahati, Assam');
+  const [phone, setPhone] = useState('+91 ');
+  const [email, setEmail] = useState(user.email || '');
+  const [experienceYears, setExperienceYears] = useState(8);
+  const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleCreateProduct = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addProduct({
-      title,
-      craftId: 'craft-bamboo-guild',
-      craftName,
-      artisanLocation: user.region,
-      priceInr,
-      stockAvailable,
-      description,
-      dimensions,
-      materialDetails,
-      estimatedCraftingDays,
-      supportsBulkOrders,
-      minBulkQuantity,
-      imageUrl
+    if (!artisanName.trim() || !phone.trim()) return;
+
+    joinArtisanWaitlist({
+      artisanName,
+      craftCategory,
+      location,
+      phone,
+      email,
+      experienceYears,
+      message
     });
 
-    setIsAddModalOpen(false);
-    setTitle('');
-    setDescription('');
+    setSubmitted(true);
     triggerConfetti();
   };
 
   return (
     <div className="lg:pl-[354px] min-h-screen bg-[#faf8f5] bg-creased-paper py-10 sm:py-14 px-4 sm:px-6 lg:px-10 transition-all">
-      <div className="max-w-[1320px] mx-auto">
+      <div className="max-w-[1240px] mx-auto space-y-12">
         
-        {/* Header with Role Check */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#fed7aa] border-2 border-black rounded-full font-display text-xs uppercase tracking-wider shadow-retro-sm mb-3">
-              <Hammer className="w-4 h-4 text-[#d97706]" /> Verified Artisan Portal
+        {/* Coming Soon Hero Banner */}
+        <div className="card-retro bg-[#f4eee3] p-8 sm:p-12 lg:p-14 border-[2.5px] border-[#0c0f14] shadow-retro-xl relative text-center sm:text-left overflow-hidden">
+          <div className="pushpin-red" />
+
+          <div className="max-w-3xl space-y-4 relative z-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#fef08a] border-2 border-black rounded-full font-display text-xs uppercase tracking-wider shadow-retro-sm">
+              <Clock className="w-4 h-4 text-[#ef4444] animate-spin" /> COMING SOON • PHASE 2 ROLLOUT
             </div>
-            <h1 className="font-display text-4xl sm:text-6xl font-bold text-[#0c0f14] leading-[1.05] tracking-tight mb-2">
-              ARTISAN <span className="marker-yellow">WORKSHOP</span> DESK
+
+            <h1 className="font-display text-4xl sm:text-7xl font-black text-[#0c0f14] leading-[0.95] tracking-tight uppercase">
+              INDIGENOUS <span className="marker-underline text-[#ef4444]">ARTISAN GUILD</span> STUDIO
             </h1>
-            <p className="font-hand text-xl text-zinc-700 font-bold leading-relaxed">
-              Guild Craftsman: <span className="text-[#0c0f14]">{user.name}</span> ({user.region})
+
+            <p className="font-hand text-xl sm:text-2xl text-zinc-800 font-bold leading-relaxed">
+              We are currently digitizing master craft lineages across 8 Northeast states to bring direct, fair-trade artisan storefronts with zero middlemen exploitation.
+            </p>
+
+            <div className="pt-2 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
+              <span className="px-3.5 py-1.5 bg-[#0c0f14] text-[#fef08a] rounded-xl font-display text-xs uppercase border border-black shadow-retro-sm">
+                🏺 0% PLATFORM CUT GUARANTEE
+              </span>
+              <span className="px-3.5 py-1.5 bg-[#fed7aa] text-[#9a3412] rounded-xl font-display text-xs uppercase border border-black shadow-retro-sm">
+                📜 HERITAGE GEOGRAPHICAL INDICATION (GI)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 3 Value Pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="card-retro bg-white p-6 border-2 border-black shadow-retro-md space-y-2">
+            <div className="w-10 h-10 rounded-xl bg-[#fef08a] border border-black flex items-center justify-center font-bold text-xl">
+              🪵
+            </div>
+            <h3 className="font-display text-2xl font-bold text-[#0c0f14]">DIRECT CRAFT STOREFRONT</h3>
+            <p className="font-hand text-sm font-bold text-zinc-600 leading-relaxed">
+              Authentic hand-carved bamboo tools, black stone pottery, and natural Ahimsa peace silks listed directly by the master weavers.
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            {role !== 'artisan' && (
-              <button
-                onClick={() => setRole('artisan')}
-                className="btn-retro px-4 py-2 bg-[#f4eee3] text-[#0c0f14] font-display text-xs uppercase rounded-xl border border-black shadow-retro-sm"
-              >
-                SWITCH ROLE TO ARTISAN
-              </button>
-            )}
-            <button
-              onClick={() => setIsAddModalOpen(true)}
-              className="btn-retro px-5 py-2.5 bg-[#ef4444] hover:bg-[#dc2626] text-white font-display text-xs font-black uppercase tracking-wider rounded-xl shadow-retro flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" /> ADD NEW CRAFT LISTING
-            </button>
-          </div>
-        </div>
-
-        {/* Overview Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-          <div className="card-retro bg-white p-5 border-2 border-black shadow-retro-sm space-y-1">
-            <div className="font-display text-xs uppercase text-zinc-500 font-bold">CATALOG ITEMS</div>
-            <div className="font-display text-3xl font-bold text-[#0c0f14]">{myProducts.length}</div>
-            <div className="font-hand text-xs font-bold text-[#059669]">Verified & Pending listings</div>
-          </div>
-          <div className="card-retro bg-white p-5 border-2 border-black shadow-retro-sm space-y-1">
-            <div className="font-display text-xs uppercase text-zinc-500 font-bold">CUSTOMER INQUIRIES</div>
-            <div className="font-display text-3xl font-bold text-[#ef4444]">{inquiries.length}</div>
-            <div className="font-hand text-xs font-bold text-zinc-600">Direct patron communications</div>
-          </div>
-          <div className="card-retro bg-white p-5 border-2 border-black shadow-retro-sm space-y-1">
-            <div className="font-display text-xs uppercase text-zinc-500 font-bold">PLATFORM COMMISSION</div>
-            <div className="font-display text-3xl font-bold text-[#0c0f14]">
-              {products[0]?.commissionRate || 5}%
+          <div className="card-retro bg-white p-6 border-2 border-black shadow-retro-md space-y-2">
+            <div className="w-10 h-10 rounded-xl bg-[#fed7aa] border border-black flex items-center justify-center font-bold text-xl">
+              🛡️
             </div>
-            <div className="font-hand text-xs font-bold text-zinc-600">Fair transparent rate</div>
-          </div>
-        </div>
-
-        {/* Listings Table & Approvals Status */}
-        <div className="card-retro bg-white p-6 sm:p-8 border-[2.5px] border-[#0c0f14] shadow-retro-lg mb-10 space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pb-4 border-b-2 border-dashed border-black/20">
-            <h2 className="font-display text-3xl font-bold text-[#0c0f14]">
-              MY HANDCRAFTED LISTINGS
-            </h2>
-            <span className="font-hand text-xs font-bold text-zinc-600">
-              *All new items require curator approval before public marketplace display.
-            </span>
+            <h3 className="font-display text-2xl font-bold text-[#0c0f14]">CURATOR AUTHENTICATION</h3>
+            <p className="font-hand text-sm font-bold text-zinc-600 leading-relaxed">
+              Every item is verified by our museum curators for raw materials, cultural provenance, and traditional handcrafting standards.
+            </p>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b-2 border-black text-zinc-700 font-display uppercase text-xs">
-                  <th className="pb-3">Product</th>
-                  <th className="pb-3">Category</th>
-                  <th className="pb-3">Price</th>
-                  <th className="pb-3">Stock</th>
-                  <th className="pb-3">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-black/10">
-                {myProducts.map((p) => (
-                  <tr key={p.id} className="hover:bg-[#faf8f5]">
-                    <td className="py-3.5 flex items-center gap-3">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={p.imageUrl} alt={p.title} className="w-10 h-10 rounded-lg object-cover border border-black shadow-retro-sm" />
-                      <div>
-                        <div className="font-display font-bold text-base text-[#0c0f14]">{p.title}</div>
-                        <div className="font-hand text-xs font-bold text-zinc-600">{p.dimensions}</div>
-                      </div>
-                    </td>
-                    <td className="py-3.5 font-display text-xs text-zinc-800">{p.craftName}</td>
-                    <td className="py-3.5 font-display text-base font-bold text-[#0c0f14]">₹{p.priceInr}</td>
-                    <td className="py-3.5 font-hand text-sm font-bold text-zinc-700">{p.stockAvailable} units</td>
-                    <td className="py-3.5">
-                      {p.verificationStatus === 'approved' ? (
-                        <span className="rubber-stamp rubber-stamp-green text-[9px] py-0.5">
-                          ✓ PUBLICLY LISTED
-                        </span>
-                      ) : p.verificationStatus === 'pending' ? (
-                        <span className="rubber-stamp rubber-stamp-red text-[9px] py-0.5">
-                          ⏳ PENDING APPROVAL
-                        </span>
-                      ) : (
-                        <span className="rubber-stamp rubber-stamp-red text-[9px] py-0.5">
-                          CHANGES NEEDED
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Customer Inquiries Manager */}
-        <div className="card-retro bg-[#f4eee3] p-6 sm:p-8 border-[2.5px] border-[#0c0f14] shadow-retro-lg space-y-6">
-          <h2 className="font-display text-3xl font-bold text-[#0c0f14]">
-            CUSTOMER INQUIRIES & BULK QUOTE REQUESTS
-          </h2>
-
-          {inquiries.length > 0 ? (
-            <div className="space-y-3">
-              {inquiries.map((inq) => (
-                <div key={inq.id} className="card-retro bg-white p-4 border-2 border-black flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-retro-sm">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="px-2.5 py-0.5 bg-[#fef08a] text-[#0c0f14] font-display text-[10px] font-bold uppercase rounded border border-black">
-                        {inq.orderType === 'bulk' ? 'BULK REQUEST' : 'STANDARD INQUIRY'}
-                      </span>
-                      <span className="font-display text-base font-bold text-[#0c0f14]">{inq.productTitle}</span>
-                    </div>
-                    <div className="font-hand text-xs font-bold text-zinc-600">
-                      From: {inq.customerName} • 📞 {inq.customerContact} • 📍 {inq.deliveryCity}
-                    </div>
-                    {inq.notes && (
-                      <p className="font-hand text-xs font-bold text-zinc-800 mt-2 italic bg-[#faf8f5] p-2 rounded-lg border border-black/20">
-                        &quot;{inq.notes}&quot;
-                      </p>
-                    )}
-                  </div>
-                  <div className="text-right">
-                    <span className="font-display text-sm font-bold text-[#ef4444]">Qty: {inq.requestedQuantity} pcs</span>
-                    <div className="font-hand text-xs text-zinc-500 font-bold">{inq.submittedAt}</div>
-                  </div>
-                </div>
-              ))}
+          <div className="card-retro bg-white p-6 border-2 border-black shadow-retro-md space-y-2">
+            <div className="w-10 h-10 rounded-xl bg-[#bbf7d0] border border-black flex items-center justify-center font-bold text-xl">
+              📦
             </div>
-          ) : (
-            <div className="p-8 bg-white rounded-2xl border-2 border-black text-center font-hand text-lg text-zinc-600 font-bold shadow-retro-sm">
-              No pending customer inquiries. New patron requests will appear here.
-            </div>
-          )}
+            <h3 className="font-display text-2xl font-bold text-[#0c0f14]">BULK PATRON INQUIRIES</h3>
+            <p className="font-hand text-sm font-bold text-zinc-600 leading-relaxed">
+              Enable global cultural institutions, schools, and diaspora collectors to request custom bulk orders with fair transparent escrow.
+            </p>
+          </div>
         </div>
 
-        {/* Add Product Modal */}
-        {isAddModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-xs animate-in fade-in duration-150">
-            <div className="w-full max-w-xl card-retro bg-[#faf8f5] border-[2.5px] border-[#0c0f14] shadow-retro-xl p-6 sm:p-8 space-y-4 relative">
-              <div className="pushpin-red" />
+        {/* Early Artisan Waitlist / Application Form */}
+        <div className="card-retro bg-white p-6 sm:p-10 border-[2.5px] border-[#0c0f14] shadow-retro-xl relative">
+          <div className="pushpin-red" />
 
-              <div className="flex items-center justify-between pb-3 border-b-2 border-black/20">
-                <div>
-                  <h3 className="font-display text-2xl font-bold text-[#0c0f14]">ADD HANDCRAFTED LISTING</h3>
-                  <p className="font-hand text-xs font-bold text-zinc-600">Queued for Admin Curator Verification</p>
-                </div>
-                <button onClick={() => setIsAddModalOpen(false)} className="w-7 h-7 rounded-full border border-black bg-white flex items-center justify-center text-xs font-bold mr-6">
-                  ✕
-                </button>
+          <div className="max-w-2xl mx-auto space-y-6">
+            <div className="text-center space-y-2 pb-4 border-b-2 border-dashed border-black/20">
+              <span className="font-display text-xs uppercase tracking-widest text-[#ef4444] font-bold">
+                EARLY ONBOARDING REGISTRATION
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#0c0f14]">
+                ARE YOU A TRADITIONAL CRAFTSMAN?
+              </h2>
+              <p className="font-hand text-base text-zinc-600 font-bold">
+                Join the early access cohort. Our field curators will visit your workshop to assist with free photography, GI verification, and catalog listing.
+              </p>
+            </div>
+
+            {submitted ? (
+              <div className="p-8 bg-[#bbf7d0] border-2 border-black rounded-2xl text-center space-y-3 shadow-retro-md">
+                <CheckCircle2 className="w-12 h-12 text-[#065f46] mx-auto" />
+                <h3 className="font-display text-2xl font-bold text-[#065f46]">
+                  APPLICATION RECEIVED!
+                </h3>
+                <p className="font-hand text-base text-[#065f46] font-bold max-w-md mx-auto">
+                  Thank you for keeping ancestral crafts alive. Our team will contact you shortly to coordinate workshop verification and early catalog listing.
+                </p>
               </div>
-
-              <form onSubmit={handleCreateProduct} className="space-y-3">
-                <div>
-                  <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1">
-                    Product Title *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="e.g. Handwoven Majuli Bamboo Fish Basket..."
-                    className="w-full px-3 py-2 rounded-xl bg-white border-2 border-black text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1">
-                      Craft Category
-                    </label>
-                    <select
-                      value={craftName}
-                      onChange={(e) => setCraftName(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-white border-2 border-black text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
-                    >
-                      <option value="Bamboo & Cane">Bamboo & Cane</option>
-                      <option value="Pottery & Clay">Longpi Black Pottery</option>
-                      <option value="Handloom & Weaving">Muga & Eri Ahimsa Silk</option>
-                      <option value="Household Tools">Household Tools</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1">
-                      Price (INR) *
-                    </label>
-                    <input
-                      type="number"
-                      required
-                      min={100}
-                      value={priceInr}
-                      onChange={(e) => setPriceInr(parseInt(e.target.value) || 0)}
-                      className="w-full px-3 py-2 rounded-xl bg-white border-2 border-black text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1">
-                    Description & Crafting Narrative
-                  </label>
-                  <textarea
-                    rows={3}
-                    required
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Describe how it was crafted, tools used, and significance..."
-                    className="w-full px-3 py-2 rounded-xl bg-white border-2 border-black text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1">
-                      Dimensions
+                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1 font-bold">
+                      Artisan / Guild Name *
                     </label>
                     <input
                       type="text"
-                      value={dimensions}
-                      onChange={(e) => setDimensions(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-white border-2 border-black text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
+                      required
+                      value={artisanName}
+                      onChange={(e) => setArtisanName(e.target.value)}
+                      placeholder="e.g. Majuli Mask Artisans Guild"
+                      className="w-full px-3 py-2 bg-[#faf8f5] border-2 border-black rounded-xl text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
                     />
                   </div>
+
                   <div>
-                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1">
-                      Lead Time (Days)
+                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1 font-bold">
+                      Craft Category *
+                    </label>
+                    <select
+                      value={craftCategory}
+                      onChange={(e) => setCraftCategory(e.target.value)}
+                      className="w-full px-3 py-2 bg-[#faf8f5] border-2 border-black rounded-xl text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
+                    >
+                      <option value="Bamboo & Cane Weaving">Bamboo & Cane Weaving</option>
+                      <option value="Pottery & Clay Sculpting">Longpi Black Pottery / Clay</option>
+                      <option value="Muga & Eri Ahimsa Silk">Muga & Eri Ahimsa Silk</option>
+                      <option value="Woodcarving & Bell Metal">Woodcarving & Bell Metal</option>
+                      <option value="Natural Fiber Basketry">Natural Fiber Basketry</option>
+                      <option value="Tribal Musical Instruments">Tribal Musical Instruments</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1 font-bold">
+                      Location / District *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="e.g. Majuli, Assam"
+                      className="w-full px-3 py-2 bg-[#faf8f5] border-2 border-black rounded-xl text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1 font-bold">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="+91 98640 11234"
+                      className="w-full px-3 py-2 bg-[#faf8f5] border-2 border-black rounded-xl text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1 font-bold">
+                      Years of Experience
                     </label>
                     <input
                       type="number"
-                      value={estimatedCraftingDays}
-                      onChange={(e) => setEstimatedCraftingDays(parseInt(e.target.value) || 1)}
-                      className="w-full px-3 py-2 rounded-xl bg-white border-2 border-black text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
+                      min={1}
+                      max={70}
+                      value={experienceYears}
+                      onChange={(e) => setExperienceYears(parseInt(e.target.value) || 1)}
+                      className="w-full px-3 py-2 bg-[#faf8f5] border-2 border-black rounded-xl text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
                     />
                   </div>
                 </div>
 
-                <div className="pt-2 flex justify-end gap-3 border-t-2 border-dashed border-black/20">
-                  <button
-                    type="button"
-                    onClick={() => setIsAddModalOpen(false)}
-                    className="px-4 py-2 text-xs font-display uppercase tracking-wider text-zinc-700 hover:bg-zinc-200 rounded-lg"
-                  >
-                    Cancel
-                  </button>
+                <div>
+                  <label className="block font-display text-xs uppercase tracking-wider text-zinc-700 mb-1 font-bold">
+                    Tell us about your handcrafted tools & techniques
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="e.g. We use seasoned Bhaluka bamboo harvested in autumn and split with traditional daos..."
+                    className="w-full px-3 py-2 bg-[#faf8f5] border-2 border-black rounded-xl text-xs font-bold text-[#0c0f14] outline-none shadow-retro-sm"
+                  />
+                </div>
+
+                <div className="pt-2 flex justify-end">
                   <button
                     type="submit"
-                    className="btn-retro px-5 py-2.5 bg-[#ef4444] text-white font-display text-xs font-black uppercase tracking-wider rounded-xl shadow-retro"
+                    className="btn-retro px-6 py-3 bg-[#ef4444] hover:bg-[#dc2626] text-white font-display text-xs font-black uppercase tracking-wider rounded-xl shadow-retro flex items-center gap-2"
                   >
-                    SUBMIT FOR CURATOR APPROVAL
+                    <Send className="w-4 h-4" /> SUBMIT ARTISAN WAITLIST APPLICATION
                   </button>
                 </div>
               </form>
-            </div>
+            )}
           </div>
-        )}
+        </div>
 
       </div>
     </div>

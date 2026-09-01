@@ -62,6 +62,9 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
       date: sessionDate,
       time: '5:00 PM - 6:30 PM',
       privacyMode: 'approximate',
+      joinMode: 'contacts_only',
+      minAgeRequired: 0,
+      childSafe: true,
       maxPlayers: 8,
       notes: sessionNotes
     });

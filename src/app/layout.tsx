@@ -7,11 +7,14 @@ import { GlobalSearchModal } from '@/components/GlobalSearchModal';
 import { PreserveModal } from '@/components/PreserveModal';
 import { NoiseOverlay } from '@/components/NoiseOverlay';
 import { FloatingAIAssistant } from '@/components/FloatingAIAssistant';
+import { AuthModal } from '@/components/AuthModal';
+import { AgeVerificationModal } from '@/components/AgeVerificationModal';
+import { AddContactModal } from '@/components/AddContactModal';
 
 export const metadata: Metadata = {
   title: 'Nostalgic Hub | Northeast Cultural Living Museum & Revival',
   description: 'Rediscover, preserve, learn, create, and experience forgotten traditional games, bamboo crafts, food stories, and childhood creations of Northeast India.',
-  keywords: 'Northeast India, Traditional Games, Bamboo Crafts, Assam, Meghalaya, Nagaland, Living Museum, Cultural Preservation, Upcycling AI',
+  keywords: 'Northeast India, Traditional Games, Bamboo Crafts, Assam, Meghalaya, Nagaland, Living Museum, Cultural Preservation, Upcycling AI, Child Safety',
   icons: {
     icon: '/favicon.ico',
   },
@@ -46,6 +49,9 @@ export default function RootLayout({
           <Footer />
           <GlobalSearchModal />
           <PreserveModal />
+          <AuthModal />
+          <AgeVerificationModal />
+          <AddContactModal />
           <FloatingAIAssistant />
         </AppProvider>
       </body>

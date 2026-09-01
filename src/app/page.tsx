@@ -663,7 +663,7 @@ export default function HomePage() {
               >
                 <div>
                   <div className="flex items-center justify-between text-xs font-hand font-bold text-zinc-700 mb-2">
-                    <span className="font-sans font-bold uppercase text-[10px] text-[#059669]">{food.flavorProfile}</span>
+                    <span className="font-sans font-bold uppercase text-[10px] text-[#059669]">{food.flavorProfile[0] || 'Ancestral Flavor'}</span>
                     <span>{food.region}</span>
                   </div>
 

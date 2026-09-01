@@ -1,6 +1,18 @@
-export type UserRole = 'guest' | 'user' | 'artisan' | 'admin';
+﻿export type UserRole = 'guest' | 'user' | 'artisan' | 'admin';
 
 export type SupportedLanguage = 'en' | 'hi' | 'as' | 'bn' | 'bodo';
+
+export interface UserContact {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  relationship: string; // 'Parent/Guardian' | 'Schoolmate' | 'Neighbor' | 'Family Friend' | 'Cousin' | 'Other'
+  isVerified: boolean;
+  safetyTier: 'trusted' | 'family' | 'verified_peer';
+  avatarUrl?: string;
+  addedAt: string;
+}
 
 export interface UserProfile {
   id: string;
@@ -19,6 +31,57 @@ export interface UserProfile {
   savedFoodIds: string[];
   savedProjectIds: string[];
   joinedSessionIds: string[];
+  // Safety & Verification properties
+  age: number;
+  isMinor: boolean;
+  ageVerified: boolean;
+  verificationMethod?: string; // 'Aadhaar ID' | 'Govt ID' | 'Guardian Verified' | 'Self Declaration'
+  childSafetyMode: boolean; // When true, ONLY saved contacts can invite or join meets
+  savedContacts: UserContact[];
+  isOnline: boolean;
+  lastSeen?: string;
+}
+
+export interface ActiveUserSession {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  userAvatar: string;
+  role: UserRole;
+  ipAddress: string;
+  deviceInfo: string;
+  location: string;
+  loginAt: string;
+  lastActiveAt: string;
+  isOnline: boolean;
+  ageVerified: boolean;
+  childSafetyMode: boolean;
+}
+
+export interface SiteMediaItem {
+  id: string;
+  entityType: 'game' | 'craft' | 'food' | 'product' | 'banner';
+  entityId: string;
+  title: string;
+  imageUrl: string;
+  altText?: string;
+  placement: 'hero_banner' | 'card_thumbnail' | 'cover_art' | 'detail_view';
+  updatedAt: string;
+  updatedBy: string;
+}
+
+export interface ArtisanWaitlistEntry {
+  id: string;
+  artisanName: string;
+  craftCategory: string;
+  location: string;
+  phone: string;
+  email: string;
+  experienceYears: number;
+  message: string;
+  submittedAt: string;
+  status: 'pending' | 'invited' | 'approved';
 }
 
 export interface GameProgression {
@@ -61,9 +124,12 @@ export interface GameSession {
   locality: string;
   state: string;
   privacyMode: 'precise' | 'approximate' | 'manual';
+  joinMode: 'contacts_only' | 'open_strangers'; // Contacts-only for child safety vs strangers mode
+  minAgeRequired: number; // 0 for contacts-only (safe for children), 18 for open stranger matches
+  childSafe: boolean;
   maxPlayers: number;
   currentPlayers: number;
-  participants: Array<{ id: string; name: string; avatar: string; team?: 'A' | 'B' }>;
+  participants: Array<{ id: string; name: string; avatar: string; team?: 'A' | 'B'; isContact?: boolean }>;
   notes: string;
   status: 'open' | 'in-progress' | 'completed' | 'cancelled';
   messages: Array<{ id: string; senderId: string; senderName: string; text: string; timestamp: string }>;
@@ -106,7 +172,7 @@ export interface ArtisanProduct {
   imageUrl: string;
   additionalImages?: string[];
   verificationStatus: 'approved' | 'pending' | 'rejected';
-  commissionRate: number; // e.g. 5%
+  commissionRate: number;
   rating: number;
   reviewsCount: number;
 }
@@ -232,4 +298,6 @@ export interface AdminAnalytics {
   aiCreationsGenerated: number;
   preservedCulturalItemsCount: number;
   currentCommissionPercentage: number;
+  childSafetyEnforced: boolean;
+  ageVerifiedUsersCount: number;
 }

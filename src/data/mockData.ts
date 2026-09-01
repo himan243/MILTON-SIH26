@@ -8,7 +8,11 @@ import {
   CulturalChallenge,
   BadgeInfo,
   CommunityPreserveItem,
-  AdminAnalytics
+  AdminAnalytics,
+  UserContact,
+  ActiveUserSession,
+  SiteMediaItem,
+  ArtisanWaitlistEntry
 } from '@/types';
 
 export const INITIAL_GAMES: TraditionalGame[] = [
@@ -98,102 +102,133 @@ export const INITIAL_GAMES: TraditionalGame[] = [
     tagline: 'The timeless ancestor of cricket and baseball carved from seasoned bamboo sticks.',
     story: 'Played during harvesting breaks on vast paddy fields, players use a long bamboo stick (Danda) to flick a tapered short peg (Gilli) airborne, then strike it as far as possible before opponents catch it.',
     historicalEra: 'Over 2,500 Years Ancient Heritage',
-    playersCount: '2 to 12 Players (Individual or Teams)',
-    difficultyLevel: 4,
-    equipmentNeeded: ['1 long bamboo bat (~2 feet long)', '1 small tapered wooden gilli (~4 inches long)', 'Shallow pit (Gart) in soil'],
-    playingArea: 'Open field or harvested paddy ground',
+    playersCount: '2 or more individual players or 2 teams',
+    difficultyLevel: 3,
+    equipmentNeeded: ['1 long bamboo striking stick (Danda ~ 2ft)', '1 small tapered bamboo spindle (Gilli ~ 4 inches)', 'Small dugout pivot hole (Gaddi)'],
+    playingArea: 'Open grass field or harvested paddy field',
     howToPlay: [
-      'Rest the gilli over a small oval pit in the dirt.',
-      'Insert the tip of the danda underneath and flick the gilli high into the air.',
-      'Before it hits the ground, strike it with full force forward.',
-      'If an outfielder catches it mid-air, the striker is out.',
-      'If not caught, the striker measures the distance from the pit using the length of the danda to accumulate score points.'
+      'Place the gilli across a small shallow ground pivot hole.',
+      'Insert the tip of the danda under the gilli and flip it into the air.',
+      'While in mid-air, hit the gilli forcefully with the danda towards the outfield.',
+      'If an opponent catches the gilli in mid-air, the striker is out.',
+      'If not caught, the striker measures the distance using danda lengths to accumulate points.'
     ],
     rules: [
-      'Striker has 3 attempts to flick the gilli successfully.',
-      'Fielder can throw the gilli back to hit the danda resting across the pit for an instant out.',
-      'Spectators must stand at a safe distance from the flight arc.'
+      'Three failed flick attempts result in an out.',
+      'Fielders must stay beyond the 10-meter striking perimeter.',
+      'Outfield measurements must follow a continuous straight line.'
     ],
-    skillsDeveloped: ['Hand-Eye Coordination', 'Timing & Reflexes', 'Batting Mechanics', 'Distance Estimation'],
-    imageUrl: 'https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=1200&q=80',
-    coverImage: 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=1600&q=80',
-    relatedMarketplaceItemIds: ['prod-handcarved-bamboo-gilli-set'],
-    activePlayersNearbyCount: 11,
+    skillsDeveloped: ['Hand-Eye Coordination', 'Timing & Strike Velocity', 'Outfield Reflexes'],
+    imageUrl: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1600&q=80',
+    activePlayersNearbyCount: 18,
     featured: true
   },
   {
-    id: 'kith-kith-hopscotch',
-    name: 'Kith-Kith (Kokla Chapaki / Ekka-Dukka)',
+    id: 'dhop-khel-rubber-ball',
+    name: 'Dhop Khel (Indigenous Tag Dodgeball)',
     vernacularNames: {
-      as: 'ককলা চাপাকি (Kokla Chapaki)',
-      bn: 'এক্কা-দোক্কা (Ekka Dokka)',
-      hi: 'कित-कित / स्टापू',
-      bodo: 'थापला गेलेमु'
+      as: 'ঢোপ খেল (Dhop Khel)',
+      hi: 'धोप खेल',
+      bodo: 'धप गेलेमु'
     },
-    region: 'Northeast Village Verandas & Courtyards',
-    tagline: 'Hop through chalked celestial grids on one foot while nudging a flat clay token.',
-    story: 'A beloved game of balance and precision played across verandas on monsoon mornings. Players toss a terracotta shard (Chara) into numbered squares and hop through the court without touching the boundary lines.',
-    historicalEra: 'Classical Folk Game',
-    playersCount: '2 to 6 Players',
-    difficultyLevel: 2,
-    equipmentNeeded: ['Flat clay piece or smooth stone shard', 'Chalk or charcoal to draw the 8-block grid'],
-    playingArea: 'Flat smooth courtyard or pavement (4m x 2m)',
+    region: 'Assam & Bodo Territorial Region',
+    tagline: 'The royal Bihu field sport of dodging, sprint-tagging, and rubber ball volleys.',
+    story: 'Historically patronized by Ahom monarchs during Rongali Bihu celebrations in the open amphitheater of Rang Ghar. Two teams throw a woven dhop (cloth or rubber ball) across opposing courts, sending a sprinter (Katia) to tag opponents before dodging back safely.',
+    historicalEra: '17th Century Royal Ahom Court',
+    playersCount: '2 Teams of 11 players each',
+    difficultyLevel: 4,
+    equipmentNeeded: ['1 traditional woven cloth/rubber Dhop ball', 'Rectangular field (125m x 80m) marked with central border line'],
+    playingArea: 'Large outdoor grass sports pitch',
     howToPlay: [
-      'Toss your token into Square 1.',
-      'Hop on one leg into each successive box skipping Square 1.',
-      'At double boxes (4-5 and 7-8), land with both feet simultaneously.',
-      'Turn around at the apex, hop back, retrieve your token while balancing on one foot, and hop out.',
-      'Advance token to the next numbered block in successive rounds.'
+      'Teams take positions on either side of the center line.',
+      'A player throws the dhop into the opponent court.',
+      'If caught, a designated Katia enters opponent territory holding their breath or racing to tag defenders.',
+      'Defenders attempt to dodge the Katia without stepping out of bounds.',
+      'Tagged players must leave the field; surviving teams score points based on successful returns.'
     ],
     rules: [
-      'Token must land entirely within the target box without touching chalk borders.',
-      'Stepping on lines or losing single-leg balance ends the turn immediately.',
-      'First to complete all 8 houses and claim a "rest home" wins.'
+      'Katia must not step over boundary lines while chasing.',
+      'Defenders cannot physically restrain the Katia, only evade.',
+      'Ball throws must clear the center line without touching ground.'
     ],
-    skillsDeveloped: ['Physical Balance & Core Strength', 'Precision Tossing', 'Rhythm & Concentration'],
-    imageUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1200&q=80',
-    coverImage: 'https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=1600&q=80',
-    activePlayersNearbyCount: 7
+    skillsDeveloped: ['High-Intensity Cardiovascular Stamina', 'Agile Footwork', 'Breath Control & Focus'],
+    imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=1600&q=80',
+    activePlayersNearbyCount: 6,
+    featured: false
   },
   {
-    id: 'marbles-goti-kancha',
-    name: 'Goti / Kancha (Glass Marble Duels)',
+    id: 'koni-juj-egg-clash',
+    name: 'Koni Juj (Bihu Spring Egg Clash)',
     vernacularNames: {
-      as: 'গুটিকা / মাৰ্বল (Guti / Marble)',
-      bn: 'গুলি / মার্বেল (Guli)',
-      hi: 'कंचे / गोली',
-      bodo: 'मार्बल गेलेमु'
+      as: 'কণী যুঁজ (Koni Juj)',
+      hi: 'अंडा युद्ध',
+      bodo: 'दै गेलेमु'
     },
-    region: 'Pan-Northeast Villages & Streets',
-    tagline: 'Flick iridescent glass spheres into shallow soil holes and knock away rivals.',
-    story: 'From dusty village squares to shady banyan tree roots, marble duels brought children together with specialized finger-flicking techniques like the index pull and thumb spring. Players wagered colorful swirls and cat-eye marbles.',
-    historicalEra: 'Folk Century Heritage',
-    playersCount: '2 to 8 Players',
-    difficultyLevel: 3,
-    equipmentNeeded: ['Set of glass marbles (Kanchas / Gutis)', 'A 2-inch shallow hole dug in smooth dirt'],
-    playingArea: 'Dry soil or sand clearing',
+    region: 'Assam Brahmaputra Valley',
+    tagline: 'Springtime Bihu duel of hard-boiled duck eggs, shell acoustics, and festive pride.',
+    story: 'Held during Goru Bihu and Rongali Bihu dawn gatherings. Villagers carefully select free-range duck and hen eggs, tapping the tips against their front teeth to test shell density before competing in pairwise egg-striking duels.',
+    historicalEra: 'Ancient Agrarian Bihu Festival',
+    playersCount: '2 Players (Tournament Ladder)',
+    difficultyLevel: 2,
+    equipmentNeeded: ['Hard-boiled indigenous duck or country hen eggs'],
+    playingArea: 'Village courtyard, tea stall benches, or community fields',
     howToPlay: [
-      'Toss a marble towards the target hole from the starting line.',
-      'The closest player to the hole shoots first.',
-      'Tuck the marble into the left index finger and pull back with right finger to catapult it.',
-      'Sink your marble into the hole, then strike opponents marbles to capture them.'
+      'Both players hold their boiled egg firmly, exposing only the pointed tip (koni-muri).',
+      'One player holds their egg stationary while the opponent delivers a single direct strike tip-to-tip.',
+      'The player whose eggshell fractures loses their egg to the victor.',
+      'The winner advances to challenge others until only the undefeated champion egg remains.'
     ],
     rules: [
-      'No advancing past the shooting anchor point ("Angutha tekna").',
-      'Direct hits reward an extra turn and score tokens.'
+      'Only natural eggs allowed (no wax, plaster, or synthetic hardening).',
+      'Strikes must be direct tip-to-tip; glancing hits are void.',
+      'Loser must hand over the broken egg to the winner.'
     ],
-    skillsDeveloped: ['Micro-Motor Precision', 'Trajectory Calculation', 'Focus under Pressure'],
-    imageUrl: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=1200&q=80',
-    coverImage: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=1600&q=80',
-    activePlayersNearbyCount: 16
+    skillsDeveloped: ['Material Acoustic Testing', 'Precision Grip', 'Community Camaraderie'],
+    imageUrl: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1200&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=1600&q=80',
+    activePlayersNearbyCount: 22,
+    featured: false
+  },
+  {
+    id: 'tang-guti-stick-strike',
+    name: 'Tang Guti (Seven-Hole Pebble Jump)',
+    vernacularNames: {
+      as: 'টাং গুটি (Tang Guti)',
+      hi: 'तांग गोटी',
+      bodo: 'थां गुटि'
+    },
+    region: 'Lower Assam & Meghalaya Border',
+    tagline: 'A rhythm of tossed bamboo pegs, rapid finger scooping, and courtyard arithmetic.',
+    story: 'Played under the cool shade of courtyard mango trees, children toss bamboo tokens into consecutive circular pits dug into earth, retrieving them without touching pit edges.',
+    historicalEra: 'Pre-colonial Village Play',
+    playersCount: '2 to 4 Players',
+    difficultyLevel: 2,
+    equipmentNeeded: ['7 small excavated earth pits', '14 smooth river stones or polished bamboo cylinders'],
+    playingArea: 'Firm flat courtyard soil',
+    howToPlay: [
+      'Excavate 7 small shallow pits in a straight row.',
+      'Toss tokens rhythmically from the starting crease into target pits.',
+      'Hop on one foot through the track to retrieve tokens in designated combinations.'
+    ],
+    rules: [
+      'Stepping on pit boundaries forfeits the turn.',
+      'Must maintain balance on single foot while retrieving.'
+    ],
+    skillsDeveloped: ['Balance & Proprioception', 'Fine Motor Dexterity', 'Tactical Counting'],
+    imageUrl: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1600&q=80',
+    activePlayersNearbyCount: 11,
+    featured: false
   }
 ];
 
 export const INITIAL_CRAFTS: TraditionalCraft[] = [
   {
     id: 'craft-assamese-japi',
-    name: 'Assamese Japi (Conical Bamboo Hat)',
-    indigenousName: 'জাপি (Jaapi)',
+    name: 'Assamese Ceremonial Japi (Conical Sun Hat)',
+    indigenousName: 'অসমীয়া জাপি (Japi)',
     category: 'Bamboo & Cane',
     region: 'Nalbari & Majuli',
     state: 'Assam',
@@ -343,59 +378,37 @@ export const INITIAL_PRODUCTS: ArtisanProduct[] = [
     commissionRate: 5,
     rating: 4.8,
     reviewsCount: 12
-  },
-  {
-    id: 'prod-muga-stole-handwoven',
-    title: 'Pure Golden Muga Silk Stole with Traditional Mina Weave',
-    craftId: 'craft-muga-eri-silk',
-    craftName: 'Muga & Eri Ahimsa Peace Silk',
-    artisanId: 'artisan-anita-kalita',
-    artisanName: 'Anita Kalita Weavers',
-    artisanLocation: 'Sualkuchi, Assam',
-    artisanAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80',
-    priceInr: 4900,
-    stockAvailable: 6,
-    description: 'Naturally shimmering golden Muga silk stole. Soft, resilient, and dyed with indigenous herbal extracts. Contains GI-tagged authenticity weave.',
-    dimensions: '2m length x 0.7m width',
-    materialDetails: '100% Certified Assam Muga Golden Raw Silk',
-    estimatedCraftingDays: 12,
-    supportsBulkOrders: false,
-    imageUrl: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=800&q=80',
-    verificationStatus: 'approved',
-    commissionRate: 5,
-    rating: 4.9,
-    reviewsCount: 27
   }
 ];
 
 export const INITIAL_FOOD_STORIES: FoodStory[] = [
   {
     id: 'food-assamese-khar',
-    name: 'Khar (Alkaline Sun-Dried Banana Ash Broth)',
+    name: 'Omita Khar (Alkaline Green Papaya Ancestral Stew)',
     indigenousName: 'অমিতাৰ খাৰ (Omita Khar)',
     region: 'Brahmaputra Valley',
     state: 'Assam',
-    story: 'Khar is the undisputed soul of Assamese gastronomy—so vital that Assamese people affectionately call themselves "Kharkhowa" (Khar eaters). The dish uses natural liquid alkaline salt filtered through the sun-dried, burned ashes of Bhimkol banana peels. It cleanses the palate and prepares the stomach for digestion.',
-    culturalOccasions: ['Every Traditional Assamese Lunch Starter', 'Rongali Bihu Feasts', 'Post-Harvest Family Gatherings'],
-    flavorProfile: ['Earthy', 'Subtly Alkaline', 'Gentle Pungency of Mustard Oil', 'Aromatic Raw Papaya'],
+    story: 'Khar is the undisputed signature of an authentic Assamese meal, traditionally served first with warm rice and a drizzle of raw mustard oil. Prepared using filtered water poured through the sun-dried ashes of charred wild banana peels (Bhimkol Kola-Khar), it imparts a deep alkaline flavor that cleanses the digestive palate.',
+    culturalOccasions: ['Traditional Assamese Thali', 'Bihu Lunch Gatherings', 'Daily Midday Sustenance'],
+    flavorProfile: ['Alkaline', 'Earthly Mineral', 'Astringent Piquant', 'Aromatic Mustard Finish'],
     ingredients: [
-      { name: 'Kola Khar (Banana Peel Ash Alkaline Extract)', quantity: '3 tablespoons' },
-      { name: 'Green Raw Papaya (peeled and diced)', quantity: '1 medium' },
-      { name: 'Fresh Garlic cloves (crushed)', quantity: '6 cloves' },
-      { name: 'Panch Phoron / Mustard seeds', quantity: '1/2 teaspoon' },
-      { name: 'Pure Cold-Pressed Mustard Oil', quantity: '2 tablespoons' },
-      { name: 'Green chillies (slit)', quantity: '3 pieces' },
-      { name: 'Salt', quantity: 'to taste (use minimally as Khar is salty)' }
+      { name: 'Raw green papaya (diced)', quantity: '350g' },
+      { name: 'Bhimkol banana ash extract (Khar water)', quantity: '2 tablespoons' },
+      { name: 'Panch Phoron (Assamese five spice)', quantity: '1/2 teaspoon' },
+      { name: 'Pure cold-pressed mustard oil', quantity: '1.5 tablespoons' },
+      { name: 'Green chillies (slit)', quantity: '2 pieces' },
+      { name: 'Ginger paste', quantity: '1 teaspoon' },
+      { name: 'Salt', quantity: 'to taste (keep light with khar)' }
     ],
     preparationSteps: [
-      'Heat virgin mustard oil in a cast iron kadai until smoking hot.',
-      'Temper with crushed garlic and green chillies until golden and fragrant.',
-      'Add diced raw papaya, turmeric pinch, and saute for 4 minutes.',
-      'Pour in 2 cups of water and bring to a rolling boil until papaya turns tender.',
-      'Stir in the Kola Khar liquid gently; watch the broth take on its characteristic golden-green hue.',
-      'Simmer on low heat for 5 minutes and finish with a drizzle of raw mustard oil. Serve warm with steamed Joha rice.'
+      'Heat virgin mustard oil in an iron skillet until fragrant.',
+      'Temper with panch phoron and slit green chillies until they splutter.',
+      'Add diced raw green papaya and sauté with ginger paste on medium heat for 4 minutes.',
+      'Pour in the pure Bhimkol Khar water along with half a cup of warm water.',
+      'Cover and simmer gently for 12 minutes until papaya turns melt-in-mouth tender.',
+      'Serve steaming hot with fragrant Joha rice.'
     ],
-    healthAndWisdom: 'Rich in natural potassium and digestive enzymes, Kola Khar balances stomach acidity naturally without synthetic additives.',
+    healthAndWisdom: 'Traditional Kola-Khar serves as an alkaline digestive balancer, neutralizing acids from heavy seasonal diets.',
     imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80',
     featured: true
   },
@@ -518,11 +531,58 @@ export const INITIAL_NOSTALGIC_BUILDS: NostalgicBuild[] = [
   }
 ];
 
+export const INITIAL_CONTACTS: UserContact[] = [
+  {
+    id: 'cont-1',
+    name: 'Diganta Hazarika (Uncle & Guardian)',
+    phone: '+91 98640 11234',
+    email: 'diganta@family.org',
+    relationship: 'Parent/Guardian',
+    isVerified: true,
+    safetyTier: 'family',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
+    addedAt: 'Verified 2 weeks ago'
+  },
+  {
+    id: 'cont-2',
+    name: 'Bikramjit Bora (Neighborhood Classmate)',
+    phone: '+91 94350 78901',
+    email: 'bikram@cotton.edu.in',
+    relationship: 'Schoolmate',
+    isVerified: true,
+    safetyTier: 'verified_peer',
+    avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80',
+    addedAt: 'Verified 1 month ago'
+  },
+  {
+    id: 'cont-3',
+    name: 'Ananya Saikia (Heritage Club Member)',
+    phone: '+91 98540 65432',
+    email: 'ananya@heritage.in',
+    relationship: 'Family Friend',
+    isVerified: true,
+    safetyTier: 'trusted',
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80',
+    addedAt: 'Verified 3 days ago'
+  },
+  {
+    id: 'cont-4',
+    name: 'Rupjyoti Medhi (Cousin)',
+    phone: '+91 98642 99887',
+    email: 'rupjyoti@medhi.org',
+    relationship: 'Cousin',
+    isVerified: true,
+    safetyTier: 'family',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
+    addedAt: 'Verified 2 months ago'
+  }
+];
+
 export const INITIAL_SESSIONS: GameSession[] = [
   {
     id: 'session-guwahati-pittu',
     gameId: 'pittu-seven-stones',
-    gameTitle: 'Pittu (Seven Stones)',
+    gameTitle: 'Pittu (Seven Stones) - Neighborhood Safe Meet',
     hostId: 'user-arunav-barua',
     hostName: 'Arunav Barua',
     hostAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
@@ -531,25 +591,28 @@ export const INITIAL_SESSIONS: GameSession[] = [
     locality: 'Dighalipukhuri Park Courtyard',
     state: 'Guwahati, Assam',
     privacyMode: 'approximate',
+    joinMode: 'contacts_only',
+    minAgeRequired: 0,
+    childSafe: true,
     maxPlayers: 10,
-    currentPlayers: 7,
+    currentPlayers: 4,
     participants: [
-      { id: 'user-arunav-barua', name: 'Arunav Barua', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80', team: 'A' },
-      { id: 'user-priya-bodo', name: 'Priya Bodo', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80', team: 'A' },
-      { id: 'user-manoj-nath', name: 'Manoj Nath', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80', team: 'B' },
-      { id: 'user-deb-choudhury', name: 'Deb Choudhury', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=200&q=80', team: 'B' }
+      { id: 'user-arunav-barua', name: 'Arunav Barua', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80', team: 'A', isContact: true },
+      { id: 'cont-1', name: 'Diganta Hazarika', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80', team: 'A', isContact: true },
+      { id: 'cont-2', name: 'Bikramjit Bora', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80', team: 'B', isContact: true },
+      { id: 'cont-3', name: 'Ananya Saikia', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80', team: 'B', isContact: true }
     ],
-    notes: 'Bringing seven flat river stones and a soft rubber ball. All beginners welcome! Wear sneakers.',
+    notes: 'Bringing seven flat river stones and a soft rubber ball. Family & verified contacts only.',
     status: 'open',
     messages: [
       { id: 'm1', senderId: 'user-arunav-barua', senderName: 'Arunav', text: 'Hey everyone! Setting up the boundaries near the north banyan tree at 4:15 PM.', timestamp: '2 hours ago' },
-      { id: 'm2', senderId: 'user-priya-bodo', senderName: 'Priya', text: 'Awesome, bringing water bottles for Team A!', timestamp: '1 hour ago' }
+      { id: 'm2', senderId: 'cont-2', senderName: 'Bikramjit', text: 'Awesome, bringing water bottles for Team A!', timestamp: '1 hour ago' }
     ]
   },
   {
     id: 'session-shillong-sholo-guti',
     gameId: 'shollo-ana-sixteen-soldiers',
-    gameTitle: 'Shollo Ana (16 Soldiers Tournament)',
+    gameTitle: 'Shollo Ana Open Tournament (18+ Age Verified)',
     hostId: 'user-ban-khongwir',
     hostName: 'Ban Khongwir',
     hostAvatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80',
@@ -558,17 +621,218 @@ export const INITIAL_SESSIONS: GameSession[] = [
     locality: 'Ward’s Lake Wooden Gazebo',
     state: 'Shillong, Meghalaya',
     privacyMode: 'approximate',
+    joinMode: 'open_strangers',
+    minAgeRequired: 18,
+    childSafe: false,
     maxPlayers: 6,
-    currentPlayers: 4,
+    currentPlayers: 2,
     participants: [
-      { id: 'user-ban-khongwir', name: 'Ban Khongwir', avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80' },
-      { id: 'user-samar-paul', name: 'Samar Paul', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80' }
+      { id: 'user-ban-khongwir', name: 'Ban Khongwir', avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80', isContact: false },
+      { id: 'user-samar-paul', name: 'Samar Paul', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80', isContact: false }
     ],
-    notes: 'Friendly round-robin tournament on hand-painted pine boards with warm tea.',
+    notes: 'Friendly open tactical tournament on hand-painted pine boards. Open to age-verified adults.',
     status: 'open',
     messages: [
       { id: 'm3', senderId: 'user-ban-khongwir', senderName: 'Ban', text: 'Board is freshly waxed. Ready for good tactics.', timestamp: 'Yesterday' }
     ]
+  },
+  {
+    id: 'session-gilli-danda-cotton',
+    gameId: 'gilli-danda-chela-bata',
+    gameTitle: 'Gilli Danda Weekend Revival - Saved Contacts Only',
+    hostId: 'user-deb-choudhury',
+    hostName: 'Deb Choudhury',
+    hostAvatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=200&q=80',
+    date: 'Sunday, 7:30 AM',
+    time: '7:30 AM - 9:30 AM',
+    locality: 'Judges Field, Panbazar',
+    state: 'Guwahati, Assam',
+    privacyMode: 'precise',
+    joinMode: 'contacts_only',
+    minAgeRequired: 0,
+    childSafe: true,
+    maxPlayers: 12,
+    currentPlayers: 3,
+    participants: [
+      { id: 'user-deb-choudhury', name: 'Deb Choudhury', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=200&q=80', isContact: true }
+    ],
+    notes: 'Morning fresh air match for kids, teens & family friends. Parent supervision available.',
+    status: 'open',
+    messages: []
+  }
+];
+
+export const INITIAL_ACTIVE_SESSIONS: ActiveUserSession[] = [
+  {
+    id: 'sess-1',
+    userId: 'user-arunav-barua',
+    userName: 'Arunav Barua',
+    userEmail: 'arunav.barua@nostalgichub.org',
+    userAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+    role: 'user',
+    ipAddress: '103.28.12.84',
+    deviceInfo: 'Chrome 128 / Windows 11',
+    location: 'Guwahati, Assam',
+    loginAt: '35 minutes ago',
+    lastActiveAt: 'Active Just now',
+    isOnline: true,
+    ageVerified: true,
+    childSafetyMode: false
+  },
+  {
+    id: 'sess-2',
+    userId: 'user-priya-sharma',
+    userName: 'Priya Sharma (Minor Explorer)',
+    userEmail: 'priya.sharma@safekids.in',
+    userAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
+    role: 'user',
+    ipAddress: '103.28.14.92',
+    deviceInfo: 'Safari 18 / iPadOS',
+    location: 'Shillong, Meghalaya',
+    loginAt: '1 hour ago',
+    lastActiveAt: 'Active 4m ago',
+    isOnline: true,
+    ageVerified: false,
+    childSafetyMode: true
+  },
+  {
+    id: 'sess-3',
+    userId: 'user-curator-admin',
+    userName: 'Heritage Curator Admin',
+    userEmail: 'curator@nostalgichub.org',
+    userAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+    role: 'admin',
+    ipAddress: '14.139.222.10',
+    deviceInfo: 'Firefox 130 / macOS Sequoia',
+    location: 'State Museum, Guwahati',
+    loginAt: '2 hours ago',
+    lastActiveAt: 'Active Just now',
+    isOnline: true,
+    ageVerified: true,
+    childSafetyMode: false
+  },
+  {
+    id: 'sess-4',
+    userId: 'user-bikram-bora',
+    userName: 'Bikramjit Bora',
+    userEmail: 'bikram@cotton.edu.in',
+    userAvatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80',
+    role: 'user',
+    ipAddress: '103.28.12.89',
+    deviceInfo: 'Chrome Mobile / Android 14',
+    location: 'Jorhat, Assam',
+    loginAt: '12 minutes ago',
+    lastActiveAt: 'Active 2m ago',
+    isOnline: true,
+    ageVerified: false,
+    childSafetyMode: true
+  }
+];
+
+export const INITIAL_SITE_MEDIA: SiteMediaItem[] = [
+  {
+    id: 'med-game-pittu',
+    entityType: 'game',
+    entityId: 'pittu-seven-stones',
+    title: 'Pittu (Seven Stones) Primary Image',
+    imageUrl: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1200&q=80',
+    altText: 'Seven river stones tower in an open village field',
+    placement: 'card_thumbnail',
+    updatedAt: 'Today',
+    updatedBy: 'Admin Curator'
+  },
+  {
+    id: 'med-game-sholo',
+    entityType: 'game',
+    entityId: 'shollo-ana-sixteen-soldiers',
+    title: 'Shollo Ana Tactical Board Game',
+    imageUrl: 'https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?auto=format&fit=crop&w=1200&q=80',
+    altText: 'Traditional wooden board with sixteen stones',
+    placement: 'card_thumbnail',
+    updatedAt: 'Today',
+    updatedBy: 'Admin Curator'
+  },
+  {
+    id: 'med-game-gilli',
+    entityType: 'game',
+    entityId: 'gilli-danda-chela-bata',
+    title: 'Gilli Danda Flying Spindle',
+    imageUrl: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80',
+    altText: 'Bamboo stick striking the flying spindle',
+    placement: 'card_thumbnail',
+    updatedAt: 'Yesterday',
+    updatedBy: 'Admin Curator'
+  },
+  {
+    id: 'med-craft-japi',
+    entityType: 'craft',
+    entityId: 'craft-assamese-japi',
+    title: 'Assamese Conical Japi Sun Hat',
+    imageUrl: 'https://images.unsplash.com/photo-1605883746291-0a852ff8f0ed?auto=format&fit=crop&w=1200&q=80',
+    altText: 'Conical bamboo hat with red felt rosette',
+    placement: 'card_thumbnail',
+    updatedAt: '2 days ago',
+    updatedBy: 'Admin Curator'
+  },
+  {
+    id: 'med-craft-longpi',
+    entityType: 'craft',
+    entityId: 'craft-longpi-black-pottery',
+    title: 'Longpi Black Serpentine Pottery',
+    imageUrl: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1200&q=80',
+    altText: 'Black stone kettle with cane handle',
+    placement: 'card_thumbnail',
+    updatedAt: '3 days ago',
+    updatedBy: 'Admin Curator'
+  },
+  {
+    id: 'med-food-khar',
+    entityType: 'food',
+    entityId: 'food-assamese-khar',
+    title: 'Assamese Omita Khar Papaya Stew',
+    imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80',
+    altText: 'Alkaline green papaya broth with mustard oil',
+    placement: 'card_thumbnail',
+    updatedAt: '1 week ago',
+    updatedBy: 'Admin Curator'
+  },
+  {
+    id: 'med-banner-hero',
+    entityType: 'banner',
+    entityId: 'home-hero-banner',
+    title: 'Homepage Living Museum Hero Banner',
+    imageUrl: 'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?auto=format&fit=crop&w=1600&q=80',
+    altText: 'Children playing outdoors in Northeast countryside',
+    placement: 'hero_banner',
+    updatedAt: 'Today',
+    updatedBy: 'Admin Curator'
+  }
+];
+
+export const INITIAL_ARTISAN_WAITLIST: ArtisanWaitlistEntry[] = [
+  {
+    id: 'wait-1',
+    artisanName: 'Biren Borah & Majuli Bamboo Weavers',
+    craftCategory: 'Bamboo & Cane Weaving',
+    location: 'Kamalabari, Majuli Island, Assam',
+    phone: '+91 94351 22334',
+    email: 'biren.majuli@craftsguild.in',
+    experienceYears: 24,
+    message: 'We weave authentic Jakoi, Khaloi, and Majuli festival masks with natural dyes.',
+    submittedAt: 'Yesterday',
+    status: 'pending'
+  },
+  {
+    id: 'wait-2',
+    artisanName: 'Lakhimi Bodo Handloom Collective',
+    craftCategory: 'Muga & Eri Ahimsa Silk',
+    location: 'Kokrajhar, BTR, Assam',
+    phone: '+91 98542 77665',
+    email: 'lakhimi.bodo@craftsguild.in',
+    experienceYears: 18,
+    message: 'Cooperative of 35 women weavers creating Dokhona and Gamosa on traditional floor looms.',
+    submittedAt: '3 days ago',
+    status: 'invited'
   }
 ];
 
@@ -601,8 +865,8 @@ export const INITIAL_CHALLENGES: CulturalChallenge[] = [
   },
   {
     id: 'chal-support-local-artisan',
-    title: 'Artisan Patron: Send an Inquiry',
-    description: 'Explore the verified marketplace and send an inquiry or message to a local Northeast craftsman.',
+    title: 'Artisan Patron: Join the Guild Waitlist',
+    description: 'Explore traditional crafts and help verify indigenous craftsmen across the Northeast.',
     frequency: 'weekly',
     category: 'craft',
     xpReward: 350,
@@ -706,5 +970,7 @@ export const INITIAL_ANALYTICS: AdminAnalytics = {
   totalMarketplaceInquiries: 89,
   aiCreationsGenerated: 640,
   preservedCulturalItemsCount: 54,
-  currentCommissionPercentage: 5
+  currentCommissionPercentage: 5,
+  childSafetyEnforced: true,
+  ageVerifiedUsersCount: 980
 };
