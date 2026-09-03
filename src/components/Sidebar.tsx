@@ -79,27 +79,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         className={`fixed top-0 left-0 bottom-0 z-50 w-[290px] bg-graph-paper flex flex-col justify-between transition-transform duration-300 ease-out overflow-y-auto ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
-        style={{ boxShadow: '3px 0 0 #0c0f14' }}
+        style={{ boxShadow: '2px 0 0 #1c1917' }}
       >
 
         {/* ── Notebook Ring Binder Spine (integrated right edge) ──── */}
         {/*
           The spine sits flush with the sidebar's right edge.
-          Dark navy rail + metallic spiral rings create a physical
+          Earthen charcoal rail + metallic spiral rings create a tactile
           binder separator between nav and paper content canvas.
-          Width = 36px, matching the 64px safety gap in main content
-          (290px sidebar + 36px spine overlap + 64px gap = 354px left padding).
         */}
         <div
           aria-hidden="true"
           className="absolute top-0 right-0 bottom-0 w-[36px] pointer-events-none z-30 overflow-hidden"
         >
-          {/* Dark navy rail backing */}
-          <div className="absolute inset-0 bg-[#1c2235]" />
+          {/* Warm charcoal rail backing */}
+          <div className="absolute inset-0 bg-[#292524]" />
           {/* Subtle left-edge highlight on rail */}
           <div className="absolute top-0 left-0 bottom-0 w-[1px] bg-white/12" />
           {/* Right hard border */}
-          <div className="absolute top-0 right-0 bottom-0 w-[2.5px] bg-[#0c0f14]" />
+          <div className="absolute top-0 right-0 bottom-0 w-[1.75px] bg-[#1c1917]" />
           {/* Rings column */}
           <div className="relative z-10 flex flex-col justify-around h-full py-6 items-center">
             {Array.from({ length: 22 }).map((_, i) => (
@@ -114,17 +112,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           {/* Top: Brand + Nav */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              {/* 3D Retro "NOST" Brand */}
+              {/* Refined Brand Link */}
               <Link href="/" onClick={onClose} className="group inline-block">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="retro-3d-text text-4xl font-display tracking-wider group-hover:scale-105 transition-transform inline-block">
-                    NOST
+                  <span className="retro-3d-text text-2xl font-display font-black tracking-tight group-hover:scale-105 transition-transform inline-block">
+                    NOSTALGIC
                   </span>
-                  <span className="font-display text-lg font-black text-[#0c0f14] tracking-widest">
+                  <span className="font-display text-sm font-black text-[#1c1917] tracking-wider">
                     HUB
                   </span>
                 </div>
-                <span className="font-hand text-xs text-[#0c0f14]/80 font-bold block -mt-1 tracking-wide">
+                <span className="font-hand text-xs text-stone-600 block -mt-0.5 tracking-normal">
                   Northeast Living Museum
                 </span>
               </Link>
@@ -132,15 +130,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               {/* Close button on mobile */}
               <button
                 onClick={onClose}
-                className="lg:hidden w-8 h-8 rounded-full border-2 border-black bg-white flex items-center justify-center hover:bg-[#fed7aa] transition-colors shadow-retro-sm"
+                className="lg:hidden w-8 h-8 rounded-full border-[1.5px] border-[#1c1917] bg-white flex items-center justify-center hover:bg-[#fed7aa] transition-colors shadow-retro-sm"
                 aria-label="Close sidebar"
               >
-                <X className="w-4 h-4 text-[#0c0f14]" />
+                <X className="w-4 h-4 text-[#1c1917]" />
               </button>
             </div>
 
             {/* Kraft Navigation Card */}
-            <div className="card-retro bg-[#f4eee3] p-3 sm:p-4 border-[2.5px] border-[#0c0f14] shadow-retro-md">
+            <div className="card-retro bg-[#f6f1e8] p-3 sm:p-4 border-[1.75px] border-[#1c1917] shadow-retro-md">
               <nav className="flex flex-col space-y-1">
                 {navLinks.map((item) => {
                   const active = isActive(item.href);
@@ -149,14 +147,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                       key={item.href}
                       href={item.href}
                       onClick={onClose}
-                      className={`flex items-center justify-between px-3 py-1.5 rounded-xl font-display text-sm tracking-wider uppercase transition-all duration-150 ${
+                      className={`flex items-center justify-between px-3 py-2 rounded-lg font-display text-xs font-bold tracking-wider uppercase transition-all duration-150 ${
                         active
-                          ? 'bg-[#0c0f14] text-[#fef08a] translate-x-1 shadow-retro-sm'
-                          : 'text-[#0c0f14] hover:bg-black/8 hover:translate-x-1'
+                          ? 'bg-[#1c1917] text-[#fef3c7] translate-x-1 shadow-retro-sm'
+                          : 'text-[#1c1917] hover:bg-stone-900/8 hover:translate-x-1'
                       }`}
                     >
                       <span>{item.label}</span>
-                      {active && <span className="w-2 h-2 rounded-full bg-[#ef4444] animate-pulse" />}
+                      {active && <span className="w-2 h-2 rounded-full bg-[#c2410c] animate-pulse" />}
                     </Link>
                   );
                 })}
@@ -214,27 +212,27 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.label}
-                  className="w-8 h-8 rounded-full border-2 border-black bg-white flex items-center justify-center hover:bg-[#0c0f14] hover:text-[#fef08a] transition-all shadow-retro-sm hover:scale-110 active:scale-95"
+                  className="w-8 h-8 rounded-full border-[1.5px] border-[#1c1917] bg-white flex items-center justify-center hover:bg-[#1c1917] hover:text-[#fef3c7] transition-all shadow-retro-sm hover:scale-105 active:scale-95 text-[#1c1917]"
                 >
                   {social.icon}
                 </a>
               ))}
             </div>
 
-            <div className="w-full border-t-2 border-dashed border-black/40" />
+            <div className="w-full border-t-2 border-dashed border-[#1c1917]/20" />
 
             {/* Newsletter */}
             <div className="space-y-1.5">
-              <span className="font-hand text-xl font-bold text-[#0c0f14] block tracking-wide">
-                Newsletter
+              <span className="font-hand text-base font-bold text-[#1c1917] block tracking-wide">
+                Archival Newsletter
               </span>
 
               {isSubscribed ? (
-                <div className="p-2.5 bg-[#bbf7d0] border-2 border-black rounded-xl text-center space-y-0.5 shadow-retro-sm">
-                  <div className="flex items-center justify-center gap-1 font-display text-xs text-[#065f46]">
+                <div className="p-2.5 bg-[#dcfce7] border-[1.5px] border-[#1c1917] rounded-xl text-center space-y-0.5 shadow-retro-sm">
+                  <div className="flex items-center justify-center gap-1 font-display text-xs font-bold text-[#15803d]">
                     <CheckCircle className="w-3.5 h-3.5" /> SUBSCRIBED!
                   </div>
-                  <p className="font-hand text-xs text-[#065f46] font-bold">
+                  <p className="font-hand text-xs text-[#15803d]">
                     Welcome to the Nostalgia Gazette! 📬
                   </p>
                 </div>
@@ -246,13 +244,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     placeholder="E-mail here"
-                    className="flex-1 min-w-0 px-2.5 py-1.5 text-xs font-hand font-bold bg-white border-2 border-black rounded-lg text-[#0c0f14] placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-black"
+                    className="flex-1 min-w-0 px-2.5 py-1.5 text-xs font-body bg-white border-[1.5px] border-[#1c1917] rounded-lg text-[#1c1917] placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-[#1c1917]"
                   />
                   <button
                     type="submit"
-                    className="px-2.5 py-1.5 bg-[#fef08a] hover:bg-[#fde047] text-[#0c0f14] font-display text-xs font-black uppercase border-2 border-black rounded-lg shadow-retro-sm hover:translate-y-[-1px] active:translate-y-[1px] transition-transform whitespace-nowrap"
+                    className="px-3 py-1.5 bg-[#fde68a] hover:bg-[#fcd34d] text-[#1c1917] font-display text-xs font-bold uppercase border-[1.5px] border-[#1c1917] rounded-lg shadow-retro-sm hover:translate-y-[-1px] active:translate-y-[1px] transition-transform whitespace-nowrap"
                   >
-                    GO
+                    JOIN
                   </button>
                 </form>
               )}
@@ -260,9 +258,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
             {/* Footer badge */}
             <div className="pt-1 text-center">
-              <div className="inline-flex items-center gap-1 px-3 py-1 bg-white border border-black rounded-full text-[10px] font-bold uppercase tracking-wider shadow-retro-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ef4444] animate-ping" />
-                <span>Northeast Heritage MVP</span>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-stone-800 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-retro-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c2410c] animate-ping" />
+                <span className="text-stone-700">Northeast Heritage MVP</span>
               </div>
             </div>
           </div>

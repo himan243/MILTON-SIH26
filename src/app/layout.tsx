@@ -28,7 +28,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@500;600;700&display=swap"
           rel="stylesheet"
         />
         <link
@@ -36,7 +36,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#faf8f5] text-[#0c0f14] font-sans antialiased min-h-screen flex flex-col selection:bg-[#fef08a] selection:text-[#0c0f14]">
+      <body className="bg-[#faf8f5] text-[#1c1917] font-sans antialiased min-h-screen flex flex-col selection:bg-[#fde68a] selection:text-[#1c1917]">
         <AppProvider>
           <NoiseOverlay />
           <Navbar />

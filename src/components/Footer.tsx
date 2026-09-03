@@ -45,14 +45,14 @@ export const Footer: React.FC = () => {
           {/* Brand Philosophy */}
           <div className="md:col-span-5 space-y-3">
             <div className="flex items-baseline gap-2">
-              <span className="retro-3d-text text-3xl font-display tracking-wider">
-                NOST
+              <span className="retro-3d-text text-3xl font-display font-black tracking-tight">
+                NOSTALGIC
               </span>
-              <span className="font-display text-xl font-black text-[#0c0f14]">
+              <span className="font-display text-xl font-black text-[#1c1917] tracking-wider">
                 HUB
               </span>
             </div>
-            <p className="font-display text-xs uppercase tracking-widest text-[#ef4444] font-bold">
+            <p className="font-display text-xs uppercase tracking-widest text-[#c2410c] font-bold">
               Northeast India Cultural Living Museum & Revival Platform
             </p>
             <p className="text-xs text-zinc-700 leading-relaxed max-w-md font-medium">
